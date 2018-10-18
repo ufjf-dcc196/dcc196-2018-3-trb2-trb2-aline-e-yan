@@ -20,7 +20,8 @@
         <activity android:name=".CadastroEventoActivity" />
         <activity android:name=".ListarParticipantesActivity" />
         <activity android:name=".ListarEventosActivity" />
-        <activity android:name=".DetalhesPessoasActivity"></activity>
+        <activity android:name=".DetalhesPessoasActivity" />
+        <activity android:name=".ParticpanteCursoActivity"></activity>
     </application>
 
 </manifest>
