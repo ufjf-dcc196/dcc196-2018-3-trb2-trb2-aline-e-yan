@@ -10,7 +10,7 @@
         android:id="@+id/btncadastrarevento"
         android:layout_width="125dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="40dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="40dp"
@@ -19,44 +19,44 @@
         android:text="Cadastrar Evento"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btndetalhespessoas"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.759"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnlistagempessoas"
+        app:layout_constraintTop_toBottomOf="@+id/btncadastrarpessoa"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/btnlistagempessoas"
+        android:id="@+id/btncadastrarpessoa"
         android:layout_width="125dp"
         android:layout_height="57dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Lista de Pessoas"
+        android:layout_marginTop="16dp"
+        android:text="CADASTRAR PARTICIPANTE"
         app:layout_constraintEnd_toStartOf="@+id/btnlistaevento"
-        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintHorizontal_bias="0.395"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recprincipal" />
 
     <Button
         android:id="@+id/btnlistaevento"
         android:layout_width="125dp"
         android:layout_height="57dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="16dp"
         android:text="Lista de Eventos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recprincipal" />
 
     <Button
         android:id="@+id/btndetalhespessoas"
         android:layout_width="125dp"
         android:layout_height="57dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginTop="32dp"
         android:text="Detalhes Pessoas"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,8 +66,8 @@
 
     <TextView
         android:id="@+id/textSemanaComputa"
-        android:layout_width="wrap_content"
-        android:layout_height="14dp"
+        android:layout_width="160dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -79,16 +79,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="368dp"
-        android:layout_height="283dp"
+        android:id="@+id/recprincipal"
+        android:layout_width="342dp"
+        android:layout_height="289dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textSemanaComputa" />
 
