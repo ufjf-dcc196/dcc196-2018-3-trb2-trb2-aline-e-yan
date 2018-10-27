@@ -16,12 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadastrarPessoasActivity" />
+        <activity android:name=".CadastrarParticpanteActivity" />
         <activity android:name=".CadastroEventoActivity" />
-        <activity android:name=".ListarParticipantesActivity" />
+        <activity android:name=".InscritosActivity" />
         <activity android:name=".ListarEventosActivity" />
         <activity android:name=".DetalhesPessoasActivity" />
-        <activity android:name=".ParticpanteCursoActivity"></activity>
+        <activity android:name=".ParticpanteCursoActivity" />
+        <activity android:name=".AtualizarPessoaActivity"></activity>
     </application>
 
 </manifest>
