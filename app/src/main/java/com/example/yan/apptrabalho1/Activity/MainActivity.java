@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         cadevento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             Intent intent= new Intent(MainActivity.this,CadastroEventoActivity.class);
+             Intent intent= new Intent(MainActivity.this,CadastrarEventoActivity.class);
                 startActivityForResult(intent, REQUEST_CADASTRAR_EVENTO);
             }
         });
