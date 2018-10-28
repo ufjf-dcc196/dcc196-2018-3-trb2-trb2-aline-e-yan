@@ -9,20 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadastrarParticpanteActivity" />
-        <activity android:name=".CadastroEventoActivity" />
-        <activity android:name=".InscritosActivity" />
-        <activity android:name=".ListarEventosActivity" />
-        <activity android:name=".DetalhesPessoasActivity" />
-        <activity android:name=".ParticpanteCursoActivity" />
-        <activity android:name=".AtualizarPessoaActivity"></activity>
+        <activity android:name=".Activity.CadastrarParticpanteActivity" />
+        <activity android:name=".Activity.CadastroEventoActivity" />
+        <activity android:name=".Activity.InscritosActivity" />
+        <activity android:name=".Activity.ListarEventosActivity" />
+        <activity android:name=".Activity.DetalhesPessoasActivity" />
+        <activity android:name=".Activity.ParticpanteCursoActivity" />
+        <activity android:name=".Activity.AtualizarPessoaActivity"></activity>
     </application>
 
 </manifest>
