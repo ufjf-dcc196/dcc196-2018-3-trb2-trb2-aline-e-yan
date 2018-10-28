@@ -19,39 +19,44 @@ public class Evento {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
+    public Evento setTitulo(String titulo) {
         this.titulo = titulo;
+        return this;
     }
 
     public String getDia() {
         return dia;
     }
 
-    public void setDia(String dia) {
+    public Evento setDia(String dia) {
         this.dia = dia;
+        return this;
     }
 
     public String getHora() {
         return hora;
     }
 
-    public void setHora(String hora) {
+    public Evento setHora(String hora) {
         this.hora = hora;
+        return this;
     }
 
     public String getFacilitador() {
         return facilitador;
     }
 
-    public void setFacilitador(String facilitador) {
+    public Evento setFacilitador(String facilitador) {
         this.facilitador = facilitador;
+        return this;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public Evento setDescricao(String descricao) {
         this.descricao = descricao;
+        return this;
     }
 }
