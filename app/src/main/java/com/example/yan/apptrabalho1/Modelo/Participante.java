@@ -1,8 +1,11 @@
 package com.example.yan.apptrabalho1.Modelo;
 
+import java.util.ArrayList;
+
 public class Participante {
 
     private String nome, email, cpf, matricula;
+    private ArrayList<Evento> meusEventos = new ArrayList<>();
 
     public Participante() {
     }
@@ -19,31 +22,50 @@ public class Participante {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public Participante setNome(String nome) {
         this.nome = nome;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Participante setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public Participante setCpf(String cpf) {
         this.cpf = cpf;
+        return this;
     }
 
     public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
+    public Participante setMatricula(String matricula) {
         this.matricula = matricula;
+        return this;
+    }
+
+    public ArrayList<Evento> getMeusEventos() {
+        return meusEventos;
+    }
+
+    public Participante setMeusEventos(ArrayList<Evento> meusEventos) {
+        this.meusEventos = meusEventos;
+        return this;
+    }
+    public void addEvento(Evento e){
+        meusEventos.add(e);
+    }
+    public void removeEvento(Evento e){
+        meusEventos.remove(e);
     }
 }
