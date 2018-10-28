@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
      private Button cadparticipante, cadevento, listeventos,detalpessoas;
      private ArrayList<Participante> participantes = new ArrayList<>();
     private ArrayList<Evento> eventos = new ArrayList<>();
+    private ListaParticpanteAdapter particpanteAdapter;
 
     private static final int REQUEST_LISTAR_EVENTO = 1;
     private static final int REQUEST_CADASTRAR_EVENTO = 2;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         rvMain.setLayoutManager(new LinearLayoutManager(this));
 
-        final ListaParticpanteAdapter particpanteAdapter = new ListaParticpanteAdapter(participantes);
+        particpanteAdapter = new ListaParticpanteAdapter(participantes);
 
         rvMain.setAdapter(particpanteAdapter);
 
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MainActivity.this,CadastrarParticpanteActivity.class);
+                Intent intent = new Intent(MainActivity.this,CadastrarParticipante.class);
                 startActivityForResult(intent, REQUEST_CADASTRAR_PARTICPANTE);
 
             }
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     setEmail(bundleResultado.getString(MainActivity.EMAIL_PARTICPANTE));
 
             participantes.add(p);
+            rvMain.setAdapter(particpanteAdapter);
 
 
         }else if(requestCode == MainActivity.REQUEST_CADASTRAR_EVENTO && resultCode== Activity.RESULT_OK && data != null){
