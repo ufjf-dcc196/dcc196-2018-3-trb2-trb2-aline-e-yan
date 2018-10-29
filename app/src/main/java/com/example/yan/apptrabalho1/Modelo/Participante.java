@@ -68,4 +68,7 @@ public class Participante {
     public void removeEvento(Evento e){
         meusEventos.remove(e);
     }
+    public void removeEvento(int indice){
+        meusEventos.remove(indice);
+    }
 }

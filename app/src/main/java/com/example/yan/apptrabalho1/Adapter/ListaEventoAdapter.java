@@ -19,11 +19,9 @@ public class ListaEventoAdapter extends RecyclerView.Adapter<ListaEventoAdapter.
 
 
     private ArrayList<Evento> eventos = new ArrayList<>();
-    private boolean eventosParticipantes;
 
-    public ListaEventoAdapter(ArrayList<Evento> eventos, boolean eventosParticipantes) {
+    public ListaEventoAdapter(ArrayList<Evento> eventos) {
         this.eventos = eventos;
-        this.eventosParticipantes = eventosParticipantes;
     }
 
 
@@ -33,11 +31,7 @@ public class ListaEventoAdapter extends RecyclerView.Adapter<ListaEventoAdapter.
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View lstParticipantesView;
-        if(!eventosParticipantes) {
-            lstParticipantesView = inflater.inflate(R.layout.listparticipante, viewGroup, false);
-        }else{
-            lstParticipantesView = inflater.inflate(R.layout.rv_lista_meus_eventos, viewGroup, false);
-        }
+        lstParticipantesView = inflater.inflate(R.layout.listparticipante, viewGroup, false);
         ViewHolder holderView = new ViewHolder(lstParticipantesView);
         return holderView;
     }

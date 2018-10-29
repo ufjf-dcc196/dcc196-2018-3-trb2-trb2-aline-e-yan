@@ -1,8 +1,11 @@
 package com.example.yan.apptrabalho1.Modelo;
 
+import java.util.ArrayList;
+
 public class Evento {
 
     private String titulo, dia, hora, facilitador,descricao;;
+    private ArrayList<Participante> participantes = new ArrayList<>();
 
     public Evento() {
     }
@@ -59,4 +62,14 @@ public class Evento {
         this.descricao = descricao;
         return this;
     }
+    public void addParticipante(Participante p){
+        this.participantes.add(p);
+    }
+    public void removeParticipante(Participante p){
+        this.participantes.remove(p);
+    }
+    public void removeParticipante(int indice){
+        this.participantes.remove(indice);
+    }
+
 }

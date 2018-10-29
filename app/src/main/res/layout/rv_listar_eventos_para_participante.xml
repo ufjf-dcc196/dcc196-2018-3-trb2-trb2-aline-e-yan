@@ -4,19 +4,19 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/rv_lst_meus_eventos_Titulo"
+        android:id="@+id/rv_lst_eventos_para_participante_Titulo"
         android:layout_width="211dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/rv_lst_meus_eventos_Data"
+        android:id="@+id/rv_lst_eventos_para_participante_Data"
         android:layout_width="92dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/rv_lst_meus_eventos_Hora"
+        android:id="@+id/rv_lst_eventos_para_participante_Hora"
         android:layout_width="52dp"
         android:layout_height="wrap_content"
         android:layout_weight="1" />

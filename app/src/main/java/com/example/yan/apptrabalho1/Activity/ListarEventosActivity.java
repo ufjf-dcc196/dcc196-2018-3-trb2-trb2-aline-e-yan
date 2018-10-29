@@ -30,7 +30,7 @@ public class ListarEventosActivity extends AppCompatActivity {
 
         rcListaEvento.setLayoutManager(new LinearLayoutManager(this));
 
-        listaEventosAdapter = new ListaEventoAdapter(eventos , false);
+        listaEventosAdapter = new ListaEventoAdapter(eventos);
 
         rcListaEvento.setAdapter(listaEventosAdapter);
 

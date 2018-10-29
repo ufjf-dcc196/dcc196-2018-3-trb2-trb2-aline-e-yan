@@ -22,7 +22,8 @@
         <activity android:name=".Activity.ParticpanteCursoActivity" />
         <activity android:name=".Activity.AtualizarPessoaActivity" />
         <activity android:name=".Activity.CadastrarParticipante" />
-        <activity android:name=".Activity.CadastrarEventoActivity"></activity>
+        <activity android:name=".Activity.CadastrarEventoActivity" />
+        <activity android:name=".Activity.ListarEventosParaParticipanteActivity"></activity>
     </application>
 
 </manifest>

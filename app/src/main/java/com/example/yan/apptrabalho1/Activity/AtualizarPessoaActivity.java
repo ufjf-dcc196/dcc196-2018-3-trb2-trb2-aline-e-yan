@@ -11,11 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.yan.apptrabalho1.Adapter.ListaEventoAdapter;
+import com.example.yan.apptrabalho1.Adapter.ListaMeusEventoAdapter;
 import com.example.yan.apptrabalho1.Modelo.Participante;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
 
 public class AtualizarPessoaActivity extends AppCompatActivity {
+    private static final int REQUEST_CADASTRAR_EVENTO_PARTICIPANTE = 1;
+    public static final String POSICAO_PARTICIPANTE = "Posição Participante";
+
     private RecyclerView rvMeusEventos;
     private EditText nome;
     private EditText email;
@@ -24,7 +28,7 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
     private Button btnSalvar;
     private Button btnNovoEvento;
     private Button btnCancelar;
-    private ListaEventoAdapter adapter;
+    private ListaMeusEventoAdapter adapter;
     private int posicaoParticipante;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +38,11 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         Bundle bundleResult = intent.getExtras();
         posicaoParticipante = bundleResult.getInt(MainActivity.POSICAO_PARTICIPANTE);
 
-        Participante p = ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante);
+        ;
 
         rvMeusEventos = findViewById(R.id.rv_meus_eventos);
         rvMeusEventos.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ListaEventoAdapter(p.getMeusEventos(), true);
+        adapter = new ListaMeusEventoAdapter(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos());
         rvMeusEventos.setAdapter(adapter);
 
         nome = findViewById(R.id.act_Att_participante_nome);
@@ -49,10 +53,10 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         btnNovoEvento = findViewById(R.id.act_Att_participante_btnNovoEvento);
         btnCancelar = findViewById(R.id.act_Att_participante_btnCancelar);
 
-        nome.setText(p.getNome());
-        email.setText(p.getEmail());
-        cpf.setText(p.getCpf());
-        matricula.setText(p.getMatricula());
+        nome.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getNome());
+        email.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getEmail());
+        cpf.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getCpf());
+        matricula.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMatricula());
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +75,9 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         btnNovoEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent attPart = new Intent();
-                //abrir janela novo evento
-                setResult(Activity.RESULT_OK, attPart);
-                finish();
+                Intent attPart = new Intent(AtualizarPessoaActivity.this, ListarEventosParaParticipanteActivity.class);
+                attPart.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, posicaoParticipante);
+                startActivityForResult(attPart, REQUEST_CADASTRAR_EVENTO_PARTICIPANTE);
             }
         });
         btnCancelar.setOnClickListener(new View.OnClickListener() {
@@ -85,5 +88,12 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == AtualizarPessoaActivity.REQUEST_CADASTRAR_EVENTO_PARTICIPANTE && resultCode== Activity.RESULT_OK && data != null){
+             adapter.notifyDataSetChanged();
+        }
     }
 }

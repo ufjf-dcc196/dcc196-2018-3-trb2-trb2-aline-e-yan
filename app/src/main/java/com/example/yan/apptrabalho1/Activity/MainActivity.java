@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.yan.apptrabalho1.Adapter.ListaParticpanteAdapter;
 import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Modelo.Participante;
+import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
 
@@ -23,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
      private RecyclerView rvMain;
      private Button cadparticipante, cadevento, listeventos,detalpessoas;
 
-    private ArrayList<Evento> eventos = new ArrayList<>();
     private ListaParticpanteAdapter particpanteAdapter;
 
     private static final int REQUEST_LISTAR_EVENTO = 1;
@@ -134,8 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
             ParticipanteDao.getInstance().addParticipante(p);
 
-            rvMain.setAdapter(particpanteAdapter);
-
+            particpanteAdapter.notifyDataSetChanged();
 
         }else if(requestCode == MainActivity.REQUEST_CADASTRAR_EVENTO && resultCode== Activity.RESULT_OK && data != null){
 
@@ -146,9 +145,8 @@ public class MainActivity extends AppCompatActivity {
                     setFacilitador(bundleResultado.getString(MainActivity.FACILITADOR)).
                     setHora(bundleResultado.getString(MainActivity.HORA)).
                     setTitulo(bundleResultado.getString(MainActivity.TITULO_EVENTO));
-            eventos.add(e);
-            Toast.makeText(getApplicationContext(), "NOME EVENTO"+e.getDescricao(), Toast.LENGTH_SHORT).show();
 
+            EventoDao.getInstance().addEvento(e);
 
         }else if(requestCode == MainActivity.REQUEST_LISTAR_EVENTO && resultCode== Activity.RESULT_OK && data != null){
 
