@@ -19,9 +19,11 @@ public class ListaEventoAdapter extends RecyclerView.Adapter<ListaEventoAdapter.
 
 
     private ArrayList<Evento> eventos = new ArrayList<>();
+    private boolean eventosParticipantes;
 
-    public ListaEventoAdapter(ArrayList<Evento> eventos) {
+    public ListaEventoAdapter(ArrayList<Evento> eventos, boolean eventosParticipantes) {
         this.eventos = eventos;
+        this.eventosParticipantes = eventosParticipantes;
     }
 
 
@@ -30,9 +32,14 @@ public class ListaEventoAdapter extends RecyclerView.Adapter<ListaEventoAdapter.
     public ListaEventoAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View lstParticipantesView = inflater.inflate(R.layout.listparticipante,viewGroup,false);
-        ListaEventoAdapter.ViewHolder holder = new ListaEventoAdapter.ViewHolder(lstParticipantesView);
-        return holder;
+        View lstParticipantesView;
+        if(!eventosParticipantes) {
+            lstParticipantesView = inflater.inflate(R.layout.listparticipante, viewGroup, false);
+        }else{
+            lstParticipantesView = inflater.inflate(R.layout.rv_lista_meus_eventos, viewGroup, false);
+        }
+        ViewHolder holderView = new ViewHolder(lstParticipantesView);
+        return holderView;
     }
 
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.yan.apptrabalho1.Adapter.ListaParticpanteAdapter;
 import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Modelo.Participante;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
      private RecyclerView rvMain;
      private Button cadparticipante, cadevento, listeventos,detalpessoas;
-     private ArrayList<Participante> participantes = new ArrayList<>();
+
     private ArrayList<Evento> eventos = new ArrayList<>();
     private ListaParticpanteAdapter particpanteAdapter;
 
@@ -47,13 +48,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        participantesCreate();
 
         rvMain =(RecyclerView)findViewById(R.id.recprincipal);
 
         rvMain.setLayoutManager(new LinearLayoutManager(this));
 
-        particpanteAdapter = new ListaParticpanteAdapter(participantes);
+        particpanteAdapter = new ListaParticpanteAdapter(ParticipanteDao.getInstance().getParticipantes());
 
         rvMain.setAdapter(particpanteAdapter);
 
@@ -98,21 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    private void participantesCreate() {
-        for (int i = 0 ; i< 5; i++){
-            Participante p = new Participante();
-            p.setCpf("123.321.123-00").setEmail("participante"+i+"@gmail.com")
-                    .setMatricula("Matricula "+i).setNome("Nome Participante "+i);
-            participantes.add(p);
-        }
-    }
-    private void eventosCreate() {
-        for (int i = 0 ; i< 5; i++){
-            Evento e = new Evento();
-            e.setDescricao("Evento "+i).setDia("28/10/2018").setFacilitador("Aline").setHora("15:20").setTitulo("appBolado");
-            eventos.add(e);
-        }
-    }
+
 
 
 
@@ -127,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
                     setCpf(bundleResultado.getString(MainActivity.CPF_PARTICPANTE)).
                     setEmail(bundleResultado.getString(MainActivity.EMAIL_PARTICPANTE));
 
-            participantes.add(p);
+            ParticipanteDao.getInstance().addParticipante(p);
+
             rvMain.setAdapter(particpanteAdapter);
 
 
