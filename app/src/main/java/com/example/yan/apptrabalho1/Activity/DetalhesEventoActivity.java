@@ -14,13 +14,13 @@ import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
 
 public class DetalhesEventoActivity extends AppCompatActivity {
+    public static final String POSICAO_PARTICIPANTE = "Posição Participante";
     private RecyclerView rvParticipantesEvento;
     private ListaParticpanteAdapter adapter;
     private Button btnEditarInfoEvento;
     private int posicaoEvento;
     private int posicaoParticipante;
 
-    private boolean testeOringemChamado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,11 @@ public class DetalhesEventoActivity extends AppCompatActivity {
         adapter.setOnParticipanteClickListener(new ListaParticpanteAdapter.OnParticipanteClickListener() {
             @Override
             public void onParticipanteClick(View view, int position) {
-
+                int i = ParticipanteDao.getInstance().getParticipantes()
+                        .indexOf(EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().get(position));
+                Intent intent = new Intent(DetalhesEventoActivity.this, AtualizarPessoaActivity.class);
+                intent.putExtra(MainActivity.POSICAO_PARTICIPANTE, i);
+                startActivity(intent);
             }
 
             @Override

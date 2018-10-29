@@ -41,7 +41,6 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         posicaoParticipante = bundleResult.getInt(MainActivity.POSICAO_PARTICIPANTE);
 
 
-
         rvMeusEventos = findViewById(R.id.rv_meus_eventos);
         rvMeusEventos.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ListaMeusEventoAdapter(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos());
