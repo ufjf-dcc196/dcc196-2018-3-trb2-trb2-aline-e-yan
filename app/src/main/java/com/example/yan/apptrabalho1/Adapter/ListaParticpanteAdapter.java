@@ -36,7 +36,7 @@ public class ListaParticpanteAdapter extends RecyclerView.Adapter<ListaParticpan
     public ListaParticpanteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View lstParticipantesView = inflater.inflate(R.layout.listparticipante,viewGroup,false);
+        View lstParticipantesView = inflater.inflate(R.layout.rv_lista_participante,viewGroup,false);
         ViewHolder holder = new ViewHolder(lstParticipantesView);
         return holder;
     }
@@ -44,7 +44,7 @@ public class ListaParticpanteAdapter extends RecyclerView.Adapter<ListaParticpan
     @Override
     public void onBindViewHolder(@NonNull ListaParticpanteAdapter.ViewHolder holder, int position) {
         holder.txtNomeParticpante.setText(participantes.get(position).getNome());
-        holder.txtNumParticpante.setText(String.valueOf(position));
+        holder.txtNumParticpante.setText(String.valueOf(position+1));
     }
 
     @Override

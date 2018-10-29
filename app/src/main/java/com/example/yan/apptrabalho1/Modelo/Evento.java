@@ -71,5 +71,8 @@ public class Evento {
     public void removeParticipante(int indice){
         this.participantes.remove(indice);
     }
+    public void removeAllParticipantes(){
+        participantes.removeAll(participantes);
+    }
 
 }
