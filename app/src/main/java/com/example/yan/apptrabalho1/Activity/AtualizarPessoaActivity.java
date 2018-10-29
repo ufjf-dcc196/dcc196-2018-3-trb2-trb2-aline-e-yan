@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.example.yan.apptrabalho1.Adapter.ListaEventoAdapter;
 import com.example.yan.apptrabalho1.Modelo.Participante;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
 
 public class AtualizarPessoaActivity extends AppCompatActivity {
@@ -24,13 +25,17 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
     private Button btnNovoEvento;
     private Button btnCancelar;
     private ListaEventoAdapter adapter;
+    private int posicaoParticipante;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atualizar_pessoa);
         final Intent intent = getIntent();
-       // Participante p = (Participante) intent.getSerializableExtra(MainActivity.PARTICIPANTE);
-        Participante p = new Participante();
+        Bundle bundleResult = intent.getExtras();
+        posicaoParticipante = bundleResult.getInt(MainActivity.POSICAO_PARTICIPANTE);
+
+        Participante p = ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante);
+
         rvMeusEventos = findViewById(R.id.rv_meus_eventos);
         rvMeusEventos.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ListaEventoAdapter(p.getMeusEventos(), true);
@@ -53,7 +58,11 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent attPart = new Intent();
-                //ver como atualizar participante
+                ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).
+                        setNome(nome.getText().toString()).
+                        setMatricula(matricula.getText().toString()).
+                        setEmail(email.getText().toString()).
+                        setCpf(cpf.getText().toString());
                 setResult(Activity.RESULT_OK, attPart);
                 finish();
             }

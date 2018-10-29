@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_LISTAR_EVENTO = 1;
     private static final int REQUEST_CADASTRAR_EVENTO = 2;
-    private  static final int REQUEST_CADASTRAR_PARTICPANTE=3;
-    private static  final int RESQUEST_DETALHES_PESSOA=4;
+    private static final int REQUEST_CADASTRAR_PARTICPANTE=3;
+    private static final int RESQUEST_DETALHES_PESSOA= 4;
+
 
 
     public static  final String NOME_PARTICPANTE ="NOME";
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public static  final String FACILITADOR="FACILITADOR";
     public static  final String DATA="DATA";
     public static  final String HORA="HORA";
+
+    public static final String POSICAO_PARTICIPANTE = "Posição Participante";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,22 @@ public class MainActivity extends AppCompatActivity {
         rvMain.setAdapter(particpanteAdapter);
 
         cadparticipante=(Button)findViewById(R.id.btncadastrarpessoa);
+
+        particpanteAdapter.setOnParticipanteClickListener(new ListaParticpanteAdapter.OnParticipanteClickListener() {
+            @Override
+            public void onParticipanteClick(View view, int position) {
+                Intent intent = new Intent(MainActivity.this, AtualizarPessoaActivity.class);
+                intent.putExtra(MainActivity.POSICAO_PARTICIPANTE, position);
+                startActivityForResult(intent, RESQUEST_DETALHES_PESSOA);
+            }
+
+            @Override
+            public void onLongParticipanteClick(View view, int position) {
+                ParticipanteDao.getInstance().removeParticipante(position);
+                particpanteAdapter.notifyItemRemoved(position);
+            }
+        });
+
         cadparticipante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,10 +157,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else if(requestCode == MainActivity.RESQUEST_DETALHES_PESSOA && resultCode== Activity.RESULT_OK && data != null){
-
-            Bundle bundleResultado = data.getExtras();
-
-
+            rvMain.setAdapter(particpanteAdapter);
+         }
     }
-}
 }

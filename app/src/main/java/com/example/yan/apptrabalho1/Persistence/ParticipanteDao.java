@@ -35,4 +35,7 @@ public class ParticipanteDao {
     public void removeParticipante(Participante p){
         participantes.remove(p);
     }
+    public void removeParticipante(int indice){
+        participantes.remove(indice);
+    }
 }
