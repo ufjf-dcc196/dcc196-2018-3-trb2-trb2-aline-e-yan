@@ -17,6 +17,7 @@ public class ListaParticpanteAdapter extends RecyclerView.Adapter<ListaParticpan
     private ArrayList<Participante> participantes = new ArrayList<>();
     private OnParticipanteClickListener listener;
 
+
     public interface OnParticipanteClickListener {
         void onParticipanteClick(View view, int position);
         void onLongParticipanteClick(View view, int position);
@@ -28,6 +29,7 @@ public class ListaParticpanteAdapter extends RecyclerView.Adapter<ListaParticpan
 
     public ListaParticpanteAdapter(ArrayList<Participante> participantes) {
         this.participantes = participantes;
+
     }
 
 
@@ -36,7 +38,7 @@ public class ListaParticpanteAdapter extends RecyclerView.Adapter<ListaParticpan
     public ListaParticpanteAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View lstParticipantesView = inflater.inflate(R.layout.rv_lista_participante,viewGroup,false);
+        View lstParticipantesView = inflater.inflate(R.layout.rv_lista_participante, viewGroup, false);
         ViewHolder holder = new ViewHolder(lstParticipantesView);
         return holder;
     }

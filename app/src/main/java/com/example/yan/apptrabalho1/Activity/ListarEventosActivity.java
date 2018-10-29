@@ -1,5 +1,6 @@
 package com.example.yan.apptrabalho1.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,19 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.yan.apptrabalho1.Adapter.ListaEventoAdapter;
-import com.example.yan.apptrabalho1.Adapter.ListaParticpanteAdapter;
-import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
-
-import java.util.ArrayList;
 
 public class ListarEventosActivity extends AppCompatActivity {
 
     private RecyclerView rcListaEvento;
     private ListaEventoAdapter listaEventosAdapter;
-
+    public static final String POSICAO_EVENTO = "Posição Evento";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +36,14 @@ public class ListarEventosActivity extends AppCompatActivity {
         listaEventosAdapter.setOnEventoClickListener(new ListaEventoAdapter.OnEventoClickListener() {
             @Override
             public void onEventoClick(View view, int position) {
-
+                Intent intent = new Intent(ListarEventosActivity.this, DetalhesEventoActivity.class);
+                intent.putExtra(ListarEventosActivity.POSICAO_EVENTO, position);
+                startActivity(intent);
             }
 
             @Override
             public void onLongEventoClick(View view, int position) {
-                ParticipanteDao.getInstance().removeParticipanteEvento(EventoDao.getInstance().getEventos().get(position));
+                ParticipanteDao.getInstance().removeAllParticipanteEvento(EventoDao.getInstance().getEventos().get(position));
                 EventoDao.getInstance().getEventos().remove(position);
                 listaEventosAdapter.notifyDataSetChanged();
             }

@@ -1,6 +1,7 @@
 package com.example.yan.apptrabalho1.Persistence;
 
 import com.example.yan.apptrabalho1.Modelo.Evento;
+import com.example.yan.apptrabalho1.Modelo.Participante;
 
 import java.util.ArrayList;
 
@@ -46,5 +47,13 @@ public class EventoDao {
             }
         }
         return -1;
+    }
+    public void removeParticipanteEvento(Participante p){
+        for (Evento e: EventoDao.getInstance().getEventos()) {
+            if(e.getParticipantes().contains(p)){
+                int i = EventoDao.getInstance().getEventos().indexOf(e);
+                EventoDao.getInstance().getEventos().get(i).removeParticipante(p);
+            }
+        }
     }
 }

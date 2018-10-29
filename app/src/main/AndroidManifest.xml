@@ -23,7 +23,8 @@
         <activity android:name=".Activity.AtualizarPessoaActivity" />
         <activity android:name=".Activity.CadastrarParticipante" />
         <activity android:name=".Activity.CadastrarEventoActivity" />
-        <activity android:name=".Activity.ListarEventosParaParticipanteActivity"></activity>
+        <activity android:name=".Activity.ListarEventosParaParticipanteActivity" />
+        <activity android:name=".Activity.DetalhesEventoActivity"></activity>
     </application>
 
 </manifest>

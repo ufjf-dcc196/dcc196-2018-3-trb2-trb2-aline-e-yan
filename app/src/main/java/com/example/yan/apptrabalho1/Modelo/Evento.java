@@ -62,6 +62,11 @@ public class Evento {
         this.descricao = descricao;
         return this;
     }
+
+    public ArrayList<Participante> getParticipantes() {
+        return participantes;
+    }
+
     public void addParticipante(Participante p){
         this.participantes.add(p);
     }
@@ -74,5 +79,6 @@ public class Evento {
     public void removeAllParticipantes(){
         participantes.removeAll(participantes);
     }
+
 
 }

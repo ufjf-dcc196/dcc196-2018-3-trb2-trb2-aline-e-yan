@@ -41,18 +41,19 @@ public class ParticipanteDao {
     public void addParticipante(Participante p){
         participantes.add(p);
     }
-    public void removeParticipante(Participante p){
-        participantes.remove(p);
-    }
     public void removeParticipante(int indice){
         participantes.remove(indice);
     }
-    public void removeParticipanteEvento(Evento e){
+    public void removeAllParticipanteEvento(Evento e){
         for (Participante p: ParticipanteDao.getInstance().getParticipantes()) {
             if(p.getMeusEventos().contains(e)){
                 int i = ParticipanteDao.getInstance().getParticipantes().indexOf(p);
                 ParticipanteDao.getInstance().getParticipantes().get(i).removeEvento(e);
             }
         }
+    }
+    public void removeParticipanteDoEvento(Evento e, Participante p){
+        int indice = ParticipanteDao.getInstance().getParticipantes().indexOf(p);
+        ParticipanteDao.getInstance().getParticipantes().get(indice).removeEvento(e);
     }
 }

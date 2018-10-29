@@ -20,6 +20,7 @@ import com.example.yan.apptrabalho1.R;
 public class AtualizarPessoaActivity extends AppCompatActivity {
     private static final int REQUEST_CADASTRAR_EVENTO_PARTICIPANTE = 1;
     public static final String POSICAO_PARTICIPANTE = "Posição Participante";
+    public static final String POSICAO_EVENTO = "Posição Evento";
 
     private RecyclerView rvMeusEventos;
     private EditText nome;
@@ -39,7 +40,7 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         Bundle bundleResult = intent.getExtras();
         posicaoParticipante = bundleResult.getInt(MainActivity.POSICAO_PARTICIPANTE);
 
-        ;
+
 
         rvMeusEventos = findViewById(R.id.rv_meus_eventos);
         rvMeusEventos.setLayoutManager(new LinearLayoutManager(this));
@@ -92,7 +93,10 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         adapter.setOnMeusEventosClickListener(new ListaMeusEventoAdapter.OnMeusEventosClickListener() {
             @Override
             public void onMeusEventosClick(View view, int position) {
-
+                Intent intent = new Intent(AtualizarPessoaActivity.this, InscritosActivity.class);
+                intent.putExtra(AtualizarPessoaActivity.POSICAO_EVENTO, position);
+                intent.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, posicaoParticipante);
+                startActivity(intent);
             }
 
             @Override
