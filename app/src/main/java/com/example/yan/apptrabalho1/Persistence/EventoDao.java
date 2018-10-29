@@ -39,4 +39,12 @@ public class EventoDao {
     public void removeEvento(Evento e){
         eventos.remove(e);
     }
+    public int getIndiceEvento(Evento e){
+        for(int i =0; i< eventos.size(); i++){
+            if(eventos.get(i).equals(e)){
+                return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.example.yan.apptrabalho1.Adapter.ListaEventoAdapter;
 import com.example.yan.apptrabalho1.Adapter.ListaMeusEventoAdapter;
 import com.example.yan.apptrabalho1.Modelo.Participante;
+import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
 
@@ -88,6 +89,21 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
                 finish();
             }
         });
+        adapter.setOnMeusEventosClickListener(new ListaMeusEventoAdapter.OnMeusEventosClickListener() {
+            @Override
+            public void onMeusEventosClick(View view, int position) {
+
+            }
+
+            @Override
+            public void onLongMeusEventosClick(View view, int position) {
+                int indiceEvento = EventoDao.getInstance().getIndiceEvento(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos().get(position));
+                ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos().remove(position);
+                EventoDao.getInstance().getEventos().get(indiceEvento).removeParticipante(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante));
+                adapter.notifyDataSetChanged();
+            }
+        });
+
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
