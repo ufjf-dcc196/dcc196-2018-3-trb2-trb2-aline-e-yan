@@ -22,11 +22,11 @@ public class CadastrarEventoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_evento);
-        nomeEvento = findViewById(R.id.act_cadastro_Evento_Nome);
-        dataEvento = findViewById(R.id.act_cadastro_Data);
-        horarioEvento = findViewById(R.id.act_cadastro_Horario);
-        facilitadorEvento = findViewById(R.id.act_cadastro_Facilitador);
-        descricaoEvento = findViewById(R.id.act_cadastro_Descricao);
+        nomeEvento = findViewById(R.id.act_att_Evento_Nome);
+        dataEvento = findViewById(R.id.act_att_evento_Data);
+        horarioEvento = findViewById(R.id.act_att_evento_Horario);
+        facilitadorEvento = findViewById(R.id.act_att_evento_Facilitador);
+        descricaoEvento = findViewById(R.id.act_att_evento_Descricao);
         btnCadastrarEvento = findViewById(R.id.act_cadastro_btnOk);
 
         btnCadastrarEvento.setOnClickListener(new View.OnClickListener() {
