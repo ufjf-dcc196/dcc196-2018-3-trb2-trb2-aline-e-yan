@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
      private RecyclerView rvMain;
-     private Button cadparticipante, cadevento, listeventos,detalpessoas;
+     private Button cadparticipante, cadevento, listeventos;
 
     private ListaParticpanteAdapter particpanteAdapter;
 
@@ -106,14 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        detalpessoas=(Button)findViewById(R.id.btndetalhespessoas);
-        detalpessoas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DetalhesPessoasActivity.class);
-                startActivityForResult(intent, RESQUEST_DETALHES_PESSOA);
-            }
-        });
+
 
 
         }

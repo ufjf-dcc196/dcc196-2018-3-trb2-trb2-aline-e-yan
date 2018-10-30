@@ -8,60 +8,47 @@
 
     <Button
         android:id="@+id/btncadastrarevento"
-        android:layout_width="125dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Cadastrar Evento"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btndetalhespessoas"
-        app:layout_constraintHorizontal_bias="0.759"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btncadastrarpessoa"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btncadastrarpessoa"
-        android:layout_width="125dp"
-        android:layout_height="57dp"
+        android:layout_width="314dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
+        android:text="Cadastrar Evento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btncadastrarpessoa" />
+
+    <Button
+        android:id="@+id/btncadastrarpessoa"
+        android:layout_width="314dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="CADASTRAR PARTICIPANTE"
-        app:layout_constraintEnd_toStartOf="@+id/btnlistaevento"
-        app:layout_constraintHorizontal_bias="0.395"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recprincipal" />
 
     <Button
         android:id="@+id/btnlistaevento"
-        android:layout_width="125dp"
-        android:layout_height="57dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="314dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:text="Lista de Eventos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recprincipal" />
-
-    <Button
-        android:id="@+id/btndetalhespessoas"
-        android:layout_width="125dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="32dp"
-        android:text="Detalhes Pessoas"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnlistaevento"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btncadastrarevento"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
