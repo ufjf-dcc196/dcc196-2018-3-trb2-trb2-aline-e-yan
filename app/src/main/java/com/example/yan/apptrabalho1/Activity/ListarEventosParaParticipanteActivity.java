@@ -38,7 +38,13 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
             @Override
             public void onEventoParaParticipanteClick(View view, int position) {
                 Intent attPart = new Intent();
-                ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).addEvento(eventos.get(position));
+                int i = EventoDao.getInstance().getEventos().indexOf(eventos.get(position));
+                ParticipanteDao.getInstance().getParticipantes().
+                        get(posicaoParticipante).
+                        addEvento(eventos.get(position));
+
+                EventoDao.getInstance().getEventos().get(i).addParticipante(ParticipanteDao.getInstance().getParticipantes().
+                        get(posicaoParticipante));
                 setResult(Activity.RESULT_OK, attPart);
                 finish();
             }

@@ -38,6 +38,7 @@ public class ListarEventosActivity extends AppCompatActivity {
             public void onEventoClick(View view, int position) {
                 Intent intent = new Intent(ListarEventosActivity.this, DetalhesEventoActivity.class);
                 intent.putExtra(ListarEventosActivity.POSICAO_EVENTO, position);
+
                 startActivity(intent);
             }
 
