@@ -42,6 +42,7 @@ public class EditarEventoActivity extends AppCompatActivity {
                         setFacilitador(facilitadorEvento.getText().toString()).
                         setHora(horarioEvento.getText().toString()).
                         setTitulo(nomeEvento.getText().toString());
+                ListarEventosActivity.attRecycle();
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             }

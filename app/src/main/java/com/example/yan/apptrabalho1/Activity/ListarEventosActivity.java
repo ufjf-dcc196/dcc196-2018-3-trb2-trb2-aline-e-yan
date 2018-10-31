@@ -15,8 +15,12 @@ import com.example.yan.apptrabalho1.R;
 public class ListarEventosActivity extends AppCompatActivity {
 
     private RecyclerView rcListaEvento;
-    private ListaEventoAdapter listaEventosAdapter;
+    private static ListaEventoAdapter listaEventosAdapter;
     public static final String POSICAO_EVENTO = "Posição Evento";
+
+    public static void attRecycle() {
+        listaEventosAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class ListarEventosActivity extends AppCompatActivity {
                 intent.putExtra(ListarEventosActivity.POSICAO_EVENTO, position);
                 intent.putExtra(ListarEventosParaParticipanteActivity.ORIGEM_PARTICIPANTE, false);
                 startActivity(intent);
+
             }
 
             @Override
@@ -54,4 +59,5 @@ public class ListarEventosActivity extends AppCompatActivity {
 
 
     }
+
 }
