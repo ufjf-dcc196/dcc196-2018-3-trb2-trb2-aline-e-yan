@@ -21,6 +21,7 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
     private RecyclerView rvEventosParaParticipante;
     private int posicaoParticipante;
     private ListaEventoParaParticipanteAdapter adapter;
+    public static final String ORIGEM_PARTICIPANTE = "Origem de onde foi chamada a activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,11 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
 
             @Override
             public void onLongEventoParaParticipanteClick(View view, int position) {
-
+                Intent attPart = new Intent(ListarEventosParaParticipanteActivity.this, DetalhesEventoActivity.class);
+                int i = EventoDao.getInstance().getEventos().indexOf(eventos.get(position));
+                attPart.putExtra(ListarEventosActivity.POSICAO_EVENTO, i);
+                attPart.putExtra(ListarEventosParaParticipanteActivity.ORIGEM_PARTICIPANTE, true);
+                startActivity(attPart);
             }
         });
 

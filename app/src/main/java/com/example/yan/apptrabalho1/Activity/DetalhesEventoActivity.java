@@ -45,7 +45,9 @@ public class DetalhesEventoActivity extends AppCompatActivity {
         posicaoEvento = bundleResult.getInt(ListarEventosActivity.POSICAO_EVENTO);
 
         setInformacoes();
-
+        if(bundleResult.getBoolean(ListarEventosParaParticipanteActivity.ORIGEM_PARTICIPANTE)){
+            btnEditarInfoEvento.setEnabled(false);
+        }
         adapter = new ListaParticpanteAdapter(EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes());
         rvParticipantesEvento.setLayoutManager(new LinearLayoutManager(this));
         rvParticipantesEvento.setAdapter(adapter);
