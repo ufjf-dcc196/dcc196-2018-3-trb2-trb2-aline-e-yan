@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.yan.apptrabalho1.R;
 
@@ -38,9 +39,18 @@ public class CadastrarEventoActivity extends AppCompatActivity {
                 intentCadEvent.putExtra(MainActivity.DATA, dataEvento.getText().toString());
                 intentCadEvent.putExtra(MainActivity.FACILITADOR, facilitadorEvento.getText().toString());
                 intentCadEvent.putExtra(MainActivity.HORA, horarioEvento.getText().toString());
-                setResult(Activity.RESULT_OK, intentCadEvent);
-                finish();
+                if("".equals(nomeEvento.getText().toString()) || nomeEvento.getText() ==null
+                        || descricaoEvento.getText().toString().equals("") || descricaoEvento.getText()==null
+                        || dataEvento.getText().toString().equals("") || dataEvento.getText()==null
+                        || facilitadorEvento.getText().toString().equals("") || facilitadorEvento.getText()==null
+                        || horarioEvento.getText().toString().equals("") || horarioEvento.getText()==null) {
+                    Toast.makeText(getApplicationContext(), "Favor preencher todos os campos", Toast.LENGTH_LONG).show();
 
+                }else {
+
+                    setResult(Activity.RESULT_OK, intentCadEvent);
+                    finish();
+                }
             }
         });
     }

@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.example.yan.apptrabalho1.R;
 
 public class CadastrarParticipante extends AppCompatActivity {
@@ -25,6 +27,7 @@ public class CadastrarParticipante extends AppCompatActivity {
         cpf = findViewById(R.id.text_CPF);
         matricula = findViewById(R.id.text_Matricula);
 
+
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,9 +36,18 @@ public class CadastrarParticipante extends AppCompatActivity {
                 intentCadPart.putExtra(MainActivity.EMAIL_PARTICPANTE, email.getText().toString());
                 intentCadPart.putExtra(MainActivity.CPF_PARTICPANTE, cpf.getText().toString());
                 intentCadPart.putExtra(MainActivity.MATRICULA_PARTICPANTE, matricula.getText().toString());
-                setResult(Activity.RESULT_OK, intentCadPart);
+                if("".equals(nome.getText().toString()) || nome.getText() ==null
+                        || email.getText().toString().equals("") || email.getText()==null
+                        || cpf.getText().toString().equals("") || cpf.getText()==null
+                        || matricula.getText().toString().equals("") || matricula.getText()==null) {
+                    Toast.makeText(getApplicationContext(), "Favor preencher todos os campos", Toast.LENGTH_LONG).show();
 
-                finish();
+
+                }else{
+                    setResult(Activity.RESULT_OK, intentCadPart);
+
+                    finish();
+                }
             }
         });
 

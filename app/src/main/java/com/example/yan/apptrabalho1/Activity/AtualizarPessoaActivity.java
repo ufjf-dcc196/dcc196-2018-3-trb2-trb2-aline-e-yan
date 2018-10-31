@@ -84,8 +84,6 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent attPart = new Intent();
-                setResult(Activity.RESULT_OK, attPart);
                 finish();
             }
         });

@@ -26,10 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     private ListaParticpanteAdapter particpanteAdapter;
 
-    private static final int REQUEST_LISTAR_EVENTO = 1;
-    private static final int REQUEST_CADASTRAR_EVENTO = 2;
-    private static final int REQUEST_CADASTRAR_PARTICPANTE=3;
-    private static final int RESQUEST_DETALHES_PESSOA= 4;
+    private static final int REQUEST_CADASTRAR_EVENTO = 1;
+    private static final int REQUEST_CADASTRAR_PARTICPANTE=2;
+    private static final int RESQUEST_DETALHES_PESSOA= 3;
 
 
 
@@ -102,10 +101,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ListarEventosActivity.class);
-                startActivityForResult(intent, REQUEST_LISTAR_EVENTO);
+                startActivity(intent);
             }
         });
-
 
 
 
@@ -139,17 +137,8 @@ public class MainActivity extends AppCompatActivity {
                     setFacilitador(bundleResultado.getString(MainActivity.FACILITADOR)).
                     setHora(bundleResultado.getString(MainActivity.HORA)).
                     setTitulo(bundleResultado.getString(MainActivity.TITULO_EVENTO));
-
             EventoDao.getInstance().addEvento(e);
 
-        }else if(requestCode == MainActivity.REQUEST_LISTAR_EVENTO && resultCode== Activity.RESULT_OK && data != null){
-
-            Bundle bundleResultado = data.getExtras();
-
         }
-
-        else if(requestCode == MainActivity.RESQUEST_DETALHES_PESSOA && resultCode== Activity.RESULT_OK && data != null){
-            rvMain.setAdapter(particpanteAdapter);
-         }
     }
 }
