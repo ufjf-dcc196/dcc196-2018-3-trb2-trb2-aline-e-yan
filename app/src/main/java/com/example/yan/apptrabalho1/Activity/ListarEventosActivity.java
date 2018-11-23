@@ -26,8 +26,7 @@ public class ListarEventosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_eventos);
-
-
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
 
         rcListaEvento=(RecyclerView)findViewById(R.id.rclistaevento);
 

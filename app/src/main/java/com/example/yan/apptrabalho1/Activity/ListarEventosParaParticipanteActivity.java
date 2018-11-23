@@ -35,6 +35,7 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
         rvEventosParaParticipante.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ListaEventoParaParticipanteAdapter(eventos);
         rvEventosParaParticipante.setAdapter(adapter);
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         adapter.setOnEventoParaParticipanteClickListener(new ListaEventoParaParticipanteAdapter.OnEventoParaParticipanteClickListener() {
             @Override
             public void onEventoParaParticipanteClick(View view, int position) {

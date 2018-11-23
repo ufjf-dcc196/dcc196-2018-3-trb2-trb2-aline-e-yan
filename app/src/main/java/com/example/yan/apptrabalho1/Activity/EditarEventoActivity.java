@@ -31,6 +31,7 @@ public class EditarEventoActivity extends AppCompatActivity {
         horarioEvento = findViewById(R.id.act_att_evento_Horario);
         facilitadorEvento = findViewById(R.id.act_att_evento_Facilitador);
         descricaoEvento = findViewById(R.id.act_att_evento_Descricao);
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         btnOk = findViewById(R.id.act_att_evento_btnOk);
         setInformacoes();
         btnOk.setOnClickListener(new View.OnClickListener() {

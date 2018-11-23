@@ -9,8 +9,6 @@ import android.util.Log;
 import com.example.yan.apptrabalho1.Banco.SemanaContract;
 import com.example.yan.apptrabalho1.Banco.SemanaDBHelper;
 import com.example.yan.apptrabalho1.Modelo.Evento;
-import com.pexample.yan.apptrabalho1.Modelo.Evento;
-import com.example.yan.apptrabalho1.Modelo.Participante;
 
 import java.util.ArrayList;
 
@@ -45,7 +43,7 @@ public class EventoDao {
             feito = true;
         }
     }
-    public ArrayList<Evento> getEventos(Context c) {
+    public ArrayList<Evento> getEventos() {
         cursor = getAllEventosBanco();
         ArrayList<Evento> eventos = new ArrayList<>();
         int indexTituloEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_TITULO);

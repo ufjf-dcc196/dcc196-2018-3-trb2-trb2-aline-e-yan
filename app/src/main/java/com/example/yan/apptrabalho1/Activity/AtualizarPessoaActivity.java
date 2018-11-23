@@ -39,7 +39,7 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         Bundle bundleResult = intent.getExtras();
         posicaoParticipante = bundleResult.getInt(MainActivity.POSICAO_PARTICIPANTE);
-
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
 
         rvMeusEventos = findViewById(R.id.rv_meus_eventos);
         rvMeusEventos.setLayoutManager(new LinearLayoutManager(this));
