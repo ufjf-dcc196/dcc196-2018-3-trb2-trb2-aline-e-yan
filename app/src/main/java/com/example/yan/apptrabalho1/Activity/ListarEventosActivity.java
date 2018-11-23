@@ -33,6 +33,7 @@ public class ListarEventosActivity extends AppCompatActivity {
 
         rcListaEvento.setLayoutManager(new LinearLayoutManager(this));
 
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         listaEventosAdapter = new ListaEventoAdapter(EventoDao.getInstance().getEventos());
 
         rcListaEvento.setAdapter(listaEventosAdapter);

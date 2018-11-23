@@ -9,19 +9,18 @@ import android.util.Log;
 import com.example.yan.apptrabalho1.Banco.SemanaContract;
 import com.example.yan.apptrabalho1.Banco.SemanaDBHelper;
 import com.example.yan.apptrabalho1.Modelo.Evento;
-import com.pexample.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Modelo.Participante;
 
 import java.util.ArrayList;
 
-public class EventoDao {
-    private static EventoDao instance = new EventoDao();
+public class ParticipanteEventoDao {
+    private static ParticipanteEventoDao instance = new ParticipanteEventoDao();
     private SemanaDBHelper dbHelper;
     private Cursor cursor;
     private boolean feito = false;
-    private EventoDao() {
+    private ParticipanteEventoDao() {
     }
-    public static EventoDao getInstance(){
+    public static ParticipanteEventoDao getInstance(){
         return instance;
     }
 
@@ -99,6 +98,9 @@ public class EventoDao {
         return -1;
     }
 
+    public void removeParticipanteEvento(int idParticipante, int idEvento){
+
+    }
     private Cursor getAllEventosBanco() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] visao = {

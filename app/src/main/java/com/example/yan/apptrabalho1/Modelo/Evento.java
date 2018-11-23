@@ -6,6 +6,7 @@ public class Evento {
 
     private String titulo, dia, hora, facilitador,descricao;;
     private ArrayList<Participante> participantes = new ArrayList<>();
+    private int id;
 
     public Evento() {
     }
@@ -16,6 +17,15 @@ public class Evento {
         this.hora = hora;
         this.facilitador = facilitador;
         this.descricao = descricao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Evento setId(int id) {
+        this.id = id;
+        return this;
     }
 
     public String getTitulo() {
