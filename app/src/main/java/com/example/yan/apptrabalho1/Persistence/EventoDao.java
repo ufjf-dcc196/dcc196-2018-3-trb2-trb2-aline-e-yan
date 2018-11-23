@@ -9,8 +9,6 @@ import android.util.Log;
 import com.example.yan.apptrabalho1.Banco.SemanaContract;
 import com.example.yan.apptrabalho1.Banco.SemanaDBHelper;
 import com.example.yan.apptrabalho1.Modelo.Evento;
-import com.pexample.yan.apptrabalho1.Modelo.Evento;
-import com.example.yan.apptrabalho1.Modelo.Participante;
 
 import java.util.ArrayList;
 
@@ -25,7 +23,7 @@ public class EventoDao {
         return instance;
     }
 
-    public void insercaoBanco(){
+    private void insercaoBanco(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put(SemanaContract.EventoBD.COLUMN_NAME_TITULO, "Evento inserido no banco 222");

@@ -44,8 +44,34 @@ public class ParticipanteEventoDao {
             feito = true;
         }
     }
-    public ArrayList<Evento> getEventos(Context c) {
-        cursor = getAllEventosBanco();
+    public ArrayList<Participante> getEventoParticipantes(int id) {
+        cursor = getAllParticipantesEventosBanco(id,"Participante");
+        ArrayList<Participante> participantes = new ArrayList<>();
+
+        int indexNomeParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_NOME);
+        int indexCpfParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_CPF);
+        int indexEmailParticipante = cursor.
+                getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_EMAIL);
+        int indexMatriculaParticipante = cursor.
+                getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA);
+        int indexIdParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD._ID);
+
+        cursor.moveToFirst();
+        while (cursor.moveToNext()){
+            Participante temp = new Participante();
+            temp.setNome(cursor.getString(indexNomeParticipante))
+                    .setCpf(cursor.getString(indexCpfParticipante))
+                    .setEmail(cursor.getString(indexEmailParticipante))
+                    .setMatricula(cursor.getString(indexMatriculaParticipante))
+                    .setId(Integer.parseInt(cursor.getString(indexIdParticipante)));
+            participantes.add(temp);
+        }
+        return participantes;
+    }
+
+
+    public ArrayList<Evento> getParticipanteEventos(int id) {
+        cursor = getAllParticipantesEventosBanco(id,"Evento");
         ArrayList<Evento> eventos = new ArrayList<>();
         int indexTituloEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_TITULO);
         int indexDataEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_DIA);
@@ -66,54 +92,52 @@ public class ParticipanteEventoDao {
         }
         return eventos;
     }
-    public void addEvento(Evento e){
+
+
+    public void addParticpanteEvento(int idEvento, int idParticipante){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues valores = new ContentValues();
-        valores.put(SemanaContract.EventoBD.COLUMN_NAME_TITULO, e.getTitulo());
-        valores.put(SemanaContract.EventoBD.COLUMN_NAME_DESCRICAO, e.getDescricao());
-        valores.put(SemanaContract.EventoBD.COLUMN_NAME_DIA, e.getDia());
-        valores.put(SemanaContract.EventoBD.COLUMN_NAME_FACILITADOR, e.getFacilitador());
-        valores.put(SemanaContract.EventoBD.COLUMN_NAME_HORA, e.getHora());
+        valores.put(SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_EVENTO, idEvento);
+        valores.put(SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_PARTICIPANTE, idParticipante);
         db.insert(SemanaContract.EventoBD.TABLE_NAME,null, valores);
-
     }
-    public void removeEvento(Evento e){
+    public void removeParticipanteEvento(int idEvento, int idParticipante){
         //remover do banco
     }
-    public int getIndiceEvento(Evento e){
+    private Cursor getAllParticipantesEventosBanco(int id, String argumento) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] visao = {
-                SemanaContract.EventoBD.COLUMN_NAME_TITULO,
-                SemanaContract.EventoBD._ID
-        };
-        String sort = SemanaContract.EventoBD.COLUMN_NAME_DIA+ " DESC";
+        Cursor c;
+        if("Participante".equals(argumento)){
+            String[] visao = {
+                    SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_EVENTO,
+                    SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_PARTICIPANTE,
+                    SemanaContract.EventoParticipanteBD._ID,
+                    SemanaContract.ParticipanteBD.COLUMN_NAME_NOME,
+                    SemanaContract.ParticipanteBD.COLUMN_NAME_CPF,
+                    SemanaContract.ParticipanteBD.COLUMN_NAME_EMAIL,
+                    SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA,
+                    SemanaContract.ParticipanteBD._ID
+            };
+            String sort = SemanaContract.EventoParticipanteBD._ID+ " DESC";
+            c = db.query(SemanaContract.EventoParticipanteBD.TABLE_NAME, visao,
+                    "where id_participante = "+id,null,null,null, sort);
+        }else{
+            String[] visao = {
+                    SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_EVENTO,
+                    SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_PARTICIPANTE,
+                    SemanaContract.EventoParticipanteBD._ID,
+                    SemanaContract.EventoBD.COLUMN_NAME_TITULO,
+                    SemanaContract.EventoBD.COLUMN_NAME_DESCRICAO,
+                    SemanaContract.EventoBD.COLUMN_NAME_DIA,
+                    SemanaContract.EventoBD.COLUMN_NAME_FACILITADOR,
+                    SemanaContract.EventoBD.COLUMN_NAME_HORA,
+                    SemanaContract.EventoBD._ID
+            };
+            String sort = SemanaContract.EventoParticipanteBD._ID+ " DESC";
+            c = db.query(SemanaContract.EventoParticipanteBD.TABLE_NAME, visao,
+                    "where id_evento = "+id,null,null,null, sort);
 
-        Cursor c = db.query(SemanaContract.EventoBD.TABLE_NAME, visao,
-                "Where TITULO= "+e.getTitulo(),null,
-                null,null, sort);
-        Log.i("SQLTEST", "getCursorSeriado: "+c.getCount());
-        if(c.moveToFirst()){
-            return c.getInt(1);
         }
-        return -1;
-    }
-
-    public void removeParticipanteEvento(int idParticipante, int idEvento){
-
-    }
-    private Cursor getAllEventosBanco() {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String[] visao = {
-                SemanaContract.EventoBD.COLUMN_NAME_TITULO,
-                SemanaContract.EventoBD.COLUMN_NAME_DESCRICAO,
-                SemanaContract.EventoBD.COLUMN_NAME_DIA,
-                SemanaContract.EventoBD.COLUMN_NAME_FACILITADOR,
-                SemanaContract.EventoBD.COLUMN_NAME_HORA,
-                SemanaContract.EventoBD._ID
-        };
-        String sort = SemanaContract.EventoBD.COLUMN_NAME_DIA+ " DESC";
-        Cursor c = db.query(SemanaContract.EventoBD.TABLE_NAME, visao,
-                null,null,null,null, sort);
         Log.i("SQLTEST", "getCursorSeriado: "+c.getCount());
         return c;
     }

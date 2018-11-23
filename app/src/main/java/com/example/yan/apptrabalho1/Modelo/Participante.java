@@ -6,6 +6,7 @@ public class Participante {
 
     private String nome, email, cpf, matricula;
     private ArrayList<Evento> meusEventos = new ArrayList<>();
+    private int id;
 
     public Participante() {
     }
@@ -17,6 +18,14 @@ public class Participante {
         this.matricula = matricula;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public Participante setId(int id) {
+        this.id = id;
+        return this;
+    }
 
     public String getNome() {
         return nome;
