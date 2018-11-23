@@ -1,56 +1,29 @@
 package com.example.yan.apptrabalho1.Banco;
 
-import android.provider.BaseColumns;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
-public final class SemanaDBHelper {
-    public final class EventoBD implements BaseColumns {
-        public final static String TABLE_NAME = "Evento";
-        public final static String COLUMN_NAME_TITULO = "Titulo";
-        public final static String COLUMN_NAME_DIA = "DIA";
-        public final static String COLUMN_NAME_HORA = "HORA";
-        public final static String COLUMN_NAME_FACILITADOR = "FACILITADOR";
-        public final static String COLUMN_NAME_DESCRICAO = "DESCRICAO";
+public class SemanaDBHelper extends SQLiteOpenHelper {
+    public final static int DATABASE_VERSION = 1;
+    public final static String DATABASE_NAME = "Semana.db";
 
-        public final static String CREATE_EVENTO = "CREATE TABLE "+EventoBD.TABLE_NAME+" ("
-                + EventoBD._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + EventoBD.COLUMN_NAME_TITULO+ " TEXT "
-                + EventoBD.COLUMN_NAME_DIA+ " TEXT "
-                + EventoBD.COLUMN_NAME_HORA+ " TEXT "
-                + EventoBD.COLUMN_NAME_FACILITADOR+ " TEXT "
-                + EventoBD.COLUMN_NAME_DESCRICAO+ " TEXT "
-                +")";
-        public final static String DROP_EVENTO= "DROP TABLE IF EXISTS "+EventoBD.TABLE_NAME;
-
+    public SemanaDBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public final class ParticipanteBD implements BaseColumns {
-        public final static String TABLE_NAME = "Seriado";
-        public final static String COLUMN_NAME_NOME = "nome";
-        public final static String COLUMN_NAME_EMAIL = "EMAIL";
-        public final static String COLUMN_NAME_CPF = "CPF";
-        public final static String COLUMN_NAME_MATRICULA = "MATRICULA";
-
-        public final static String CREATE_PARTICPANTE  = "CREATE TABLE "+ParticipanteBD.TABLE_NAME+" ("
-                + ParticipanteBD._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ParticipanteBD.COLUMN_NAME_NOME+ " TEXT "
-                + ParticipanteBD.COLUMN_NAME_EMAIL+ " TEXT "
-                + ParticipanteBD.COLUMN_NAME_CPF+ " TEXT "
-                + ParticipanteBD.COLUMN_NAME_MATRICULA+ " TEXT "
-                +")";
-        public final static String DROP_PARTICPANTE = "DROP TABLE IF EXISTS "+ParticipanteBD.TABLE_NAME;
-
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(SemanaContract.EventoBD.CREATE_EVENTO);
+        db.execSQL(SemanaContract.ParticipanteBD.CREATE_PARTICPANTE);
+        db.execSQL(SemanaContract.EventoParticipanteBD.CREATE_EVENTO_PARTICIPANTE);
     }
-    public final class EventoParticipanteBD implements BaseColumns {
-        public final static String TABLE_NAME = "Seriado";
-        public final static String COLUMN_NAME_ID_EVENTO = "ID_EVENTO";
-        public final static String COLUMN_NAME_ID_PARTICIPANTE = "ID_PARTICIPANTE";
 
-        public final static String CREATE_EVENTO_PARTICIPANTE  = "CREATE TABLE "+EventoParticipanteBD.TABLE_NAME+" ("
-                + EventoParticipanteBD._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + EventoParticipanteBD.COLUMN_NAME_ID_EVENTO+ " INTEGER "
-                + EventoParticipanteBD.COLUMN_NAME_ID_PARTICIPANTE+ " INTEGER "
-                +")";
-        public final static String DROP_EVENTO_PARTICIPANTE = "DROP TABLE IF EXISTS "+EventoParticipanteBD.TABLE_NAME;
-
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL(SemanaContract.EventoBD.DROP_EVENTO);
+        db.execSQL(SemanaContract.ParticipanteBD.DROP_PARTICPANTE);
+        db.execSQL(SemanaContract.EventoParticipanteBD.DROP_EVENTO_PARTICIPANTE);
+        onCreate(db);
     }
 }
