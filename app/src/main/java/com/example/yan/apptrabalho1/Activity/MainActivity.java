@@ -1,16 +1,22 @@
 package com.example.yan.apptrabalho1.Activity;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.yan.apptrabalho1.Adapter.ListaParticpanteAdapter;
+import com.example.yan.apptrabalho1.Banco.SemanaContract;
+import com.example.yan.apptrabalho1.Banco.SemanaDBHelper;
 import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Modelo.Participante;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
@@ -44,19 +50,21 @@ public class MainActivity extends AppCompatActivity {
     public static  final String HORA="HORA";
 
     public static final String POSICAO_PARTICIPANTE = "Posição Participante";
+    private SemanaDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+//        dbHelper = new SemanaDBHelper(getApplicationContext());
+        ParticipanteDao.getInstance().inicializarDBHelper(getApplicationContext());
         rvMain =(RecyclerView)findViewById(R.id.recprincipal);
 
         rvMain.setLayoutManager(new LinearLayoutManager(this));
 
         particpanteAdapter = new ListaParticpanteAdapter(ParticipanteDao.getInstance().getParticipantes());
 
+//        particpanteAdapter.setCursor(getAllParticipantesBanco());
         rvMain.setAdapter(particpanteAdapter);
 
         cadparticipante=(Button)findViewById(R.id.btncadastrarpessoa);
@@ -110,8 +118,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        particpanteAdapter.setParticipantes(ParticipanteDao.getInstance().getParticipantes());
+    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -123,11 +134,8 @@ public class MainActivity extends AppCompatActivity {
                     setMatricula(bundleResultado.getString(MainActivity.MATRICULA_PARTICPANTE)).
                     setCpf(bundleResultado.getString(MainActivity.CPF_PARTICPANTE)).
                     setEmail(bundleResultado.getString(MainActivity.EMAIL_PARTICPANTE));
-
+            //addParticipante(p);
             ParticipanteDao.getInstance().addParticipante(p);
-
-            particpanteAdapter.notifyDataSetChanged();
-
         }else if(requestCode == MainActivity.REQUEST_CADASTRAR_EVENTO && resultCode== Activity.RESULT_OK && data != null){
 
             Bundle bundleResultado = data.getExtras();

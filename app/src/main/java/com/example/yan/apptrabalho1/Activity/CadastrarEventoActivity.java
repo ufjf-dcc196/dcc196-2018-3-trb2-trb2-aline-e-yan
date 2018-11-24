@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.R;
 
 public class CadastrarEventoActivity extends AppCompatActivity {
@@ -23,6 +24,7 @@ public class CadastrarEventoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         setContentView(R.layout.activity_cadastrar_evento);
         nomeEvento = findViewById(R.id.act_att_Evento_Nome);
         dataEvento = findViewById(R.id.act_att_evento_Data);

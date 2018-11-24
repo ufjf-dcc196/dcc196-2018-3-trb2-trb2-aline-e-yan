@@ -65,10 +65,10 @@ public class DetalhesEventoActivity extends AppCompatActivity {
 
             @Override
             public void onLongParticipanteClick(View view, int position) {
-                ParticipanteDao.getInstance().removeParticipanteDoEvento(
-                        EventoDao.getInstance().getEventos().get(posicaoEvento),
-                        EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().get(position));
-
+                //ParticipanteDao.getInstance().removeParticipanteDoEvento(
+                 //       EventoDao.getInstance().getEventos().get(posicaoEvento),
+  //                      EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().get(position));
+//
                 EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().remove(position);
                 adapter.notifyDataSetChanged();
             }

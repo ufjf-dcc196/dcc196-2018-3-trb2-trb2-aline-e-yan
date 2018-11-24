@@ -32,9 +32,9 @@ public class ListarEventosActivity extends AppCompatActivity {
 
         rcListaEvento.setLayoutManager(new LinearLayoutManager(this));
 
-        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         listaEventosAdapter = new ListaEventoAdapter(EventoDao.getInstance().getEventos());
 
+        listaEventosAdapter.setEventos(EventoDao.getInstance().getEventos());
         rcListaEvento.setAdapter(listaEventosAdapter);
 
         listaEventosAdapter.setOnEventoClickListener(new ListaEventoAdapter.OnEventoClickListener() {
@@ -60,4 +60,9 @@ public class ListarEventosActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listaEventosAdapter.setEventos(EventoDao.getInstance().getEventos());
+    }
 }

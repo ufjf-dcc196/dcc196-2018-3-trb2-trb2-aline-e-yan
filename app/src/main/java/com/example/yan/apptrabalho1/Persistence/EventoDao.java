@@ -52,8 +52,8 @@ public class EventoDao {
         int indexFacilitadorEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_FACILITADOR);
         int indexDescricaoEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_DESCRICAO);
         int indexIdEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD._ID);
-        cursor.moveToFirst();
-        while (cursor.moveToNext()){
+        if(cursor.moveToFirst()){
+        do{
             Evento temp = new Evento();
             temp.setTitulo(cursor.getString(indexTituloEvento))
                     .setDia(cursor.getString(indexDataEvento))
@@ -62,6 +62,7 @@ public class EventoDao {
                     .setDescricao(cursor.getString(indexDescricaoEvento))
                     .setId(Integer.parseInt(cursor.getString(indexIdEvento)));
             eventos.add(temp);
+        }while (cursor.moveToNext());
         }
         return eventos;
     }

@@ -1,6 +1,7 @@
 package com.example.yan.apptrabalho1.Persistence;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -39,6 +40,13 @@ public class ParticipanteDao {
         db.insert(SemanaContract.ParticipanteBD.TABLE_NAME,null, valores);
    }
 
+    public void inicializarDBHelper(Context c){
+        dbHelper = new SemanaDBHelper(c);
+        /*if(!feito){
+            insercaoBanco();
+            feito = true;
+        }*/
+    }
 
     public ArrayList<Participante> getParticipantes() {
         ArrayList<Participante> participantes = new ArrayList<>();
@@ -50,8 +58,8 @@ public class ParticipanteDao {
         int indexMatriculaParticipante = cursor.
                 getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA);
         int indexIdParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD._ID);
-        cursor.moveToFirst();
-        while (cursor.moveToNext()){
+        if(cursor.moveToFirst()){
+        do{
             Participante temp = new Participante();
             temp.setNome(cursor.getString(indexNomeParticipante))
                     .setCpf(cursor.getString(indexCpfParticipante))
@@ -59,6 +67,7 @@ public class ParticipanteDao {
                     .setMatricula(cursor.getString(indexMatriculaParticipante))
                     .setId(Integer.parseInt(cursor.getString(indexIdParticipante)));
             participantes.add(temp);
+        }while (cursor.moveToNext());
         }
         return participantes;
     }
@@ -70,7 +79,7 @@ public class ParticipanteDao {
         valores.put(SemanaContract.ParticipanteBD.COLUMN_NAME_CPF, p.getCpf());
         valores.put(SemanaContract.ParticipanteBD.COLUMN_NAME_EMAIL, p.getEmail());
         valores.put(SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA, p.getMatricula());
-        db.insert(SemanaContract.EventoBD.TABLE_NAME,null, valores);
+        db.insert(SemanaContract.ParticipanteBD.TABLE_NAME,null, valores);
    }
 
     public void removeParticipante(int indice){
@@ -89,8 +98,8 @@ public class ParticipanteDao {
                 SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA,
                 SemanaContract.ParticipanteBD._ID
         };
-        String sort = SemanaContract.EventoBD.COLUMN_NAME_DIA+ " DESC";
-        Cursor c = db.query(SemanaContract.EventoBD.TABLE_NAME, visao,
+        String sort = SemanaContract.ParticipanteBD.COLUMN_NAME_NOME+ " DESC";
+        Cursor c = db.query(SemanaContract.ParticipanteBD.TABLE_NAME, visao,
                 null,null,null,null, sort);
         Log.i("SQLTEST", "getCursorSeriado: "+c.getCount());
         return c;
