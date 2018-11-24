@@ -41,7 +41,7 @@ public class DetalhesEventoActivity extends AppCompatActivity {
         txtHorario = findViewById(R.id.act_detalhes_evento_Hora);
         rvParticipantesEvento = findViewById(R.id.rcDetalhesEvento);
         btnEditarInfoEvento = findViewById(R.id.act_detalhes_evento_btnEdit);
-
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         posicaoEvento = bundleResult.getInt(ListarEventosActivity.POSICAO_EVENTO);
 
         setInformacoes();

@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLongParticipanteClick(View view, int position) {
-                EventoDao.getInstance().removeParticipanteEvento(ParticipanteDao.getInstance().getParticipantes().get(position));
+              //  EventoDao.getInstance().removeParticipanteEvento(ParticipanteDao.getInstance().getParticipantes().get(position));
                 ParticipanteDao.getInstance().removeParticipante(position);
                 particpanteAdapter.notifyItemRemoved(position);
             }

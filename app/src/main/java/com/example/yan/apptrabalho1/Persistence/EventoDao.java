@@ -43,7 +43,7 @@ public class EventoDao {
             feito = true;
         }
     }
-    public ArrayList<Evento> getEventos(Context c) {
+    public ArrayList<Evento> getEventos() {
         cursor = getAllEventosBanco();
         ArrayList<Evento> eventos = new ArrayList<>();
         int indexTituloEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_TITULO);
