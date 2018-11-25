@@ -78,11 +78,14 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLongParticipanteClick(View view, Participante position) {
-              //  EventoDao.getInstance().removeParticipanteEvento(ParticipanteDao.getInstance().getParticipantes().get(position));
-                ParticipanteDao.getInstance().removeParticipante(position);
+            public void onLongParticipanteClick(View view, int position) {
+                //  EventoDao.getInstance().removeParticipanteEvento(ParticipanteDao.getInstance().getParticipantes().get(position));
+
+                ParticipanteDao.getInstance().removeParticipante(ParticipanteDao.getInstance().getParticipantes().get(position));
+                particpanteAdapter.setParticipantes(ParticipanteDao.getInstance().getParticipantes());
                 particpanteAdapter.notifyItemRemoved(position);
             }
+
         });
 
         cadparticipante.setOnClickListener(new View.OnClickListener() {

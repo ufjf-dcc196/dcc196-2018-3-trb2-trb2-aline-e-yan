@@ -49,7 +49,8 @@ public class ListarEventosActivity extends AppCompatActivity {
 
             @Override
             public void onLongEventoClick(View view, int position) {
-                ParticipanteDao.getInstance().removeAllParticipanteEvento(EventoDao.getInstance().getEventos().get(position));
+
+       //         ParticipanteDao.getInstance().removeAllParticipanteEvento(EventoDao.getInstance().getEventos().get(position));
                 EventoDao.getInstance().getEventos().remove(position);
                 listaEventosAdapter.notifyDataSetChanged();
             }

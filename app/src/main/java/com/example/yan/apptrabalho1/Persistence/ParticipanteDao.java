@@ -85,7 +85,7 @@ public class ParticipanteDao {
 //    public void removeParticipante(int indice){
     public void removeParticipante(Participante indice){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rows=db.delete("TABLE_NAME","_ID=?",new String[]{String.valueOf(indice.getId())});
+        db.delete("Participante","_ID=?",new String[]{String.valueOf(indice.getId())});
 
     }
 //    public void removeAllParticipanteEvento(Evento e)
