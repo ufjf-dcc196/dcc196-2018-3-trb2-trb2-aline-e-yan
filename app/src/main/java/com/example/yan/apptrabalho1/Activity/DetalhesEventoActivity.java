@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.yan.apptrabalho1.Adapter.ListaParticpanteAdapter;
-import com.example.yan.apptrabalho1.Modelo.Participante;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
 public class DetalhesEventoActivity extends AppCompatActivity {
@@ -25,7 +25,7 @@ public class DetalhesEventoActivity extends AppCompatActivity {
     private ListaParticpanteAdapter adapter;
     private Button btnEditarInfoEvento;
     private TextView txtTitulo,txtData,txtHorario,txtFacilitador,txtDescricao;
-    private int posicaoEvento;
+    private int idEvento;
     private int posicaoParticipante;
 
     @Override
@@ -42,13 +42,17 @@ public class DetalhesEventoActivity extends AppCompatActivity {
         rvParticipantesEvento = findViewById(R.id.rcDetalhesEvento);
         btnEditarInfoEvento = findViewById(R.id.act_detalhes_evento_btnEdit);
         EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
-        posicaoEvento = bundleResult.getInt(ListarEventosActivity.POSICAO_EVENTO);
+        ParticipanteEventoDao.getInstance().inicializarDBHelper(getApplicationContext());
+
+        idEvento = bundleResult.getInt(ListarEventosActivity.ID_EVENTO);
 
         setInformacoes();
         if(bundleResult.getBoolean(ListarEventosParaParticipanteActivity.ORIGEM_PARTICIPANTE)){
             btnEditarInfoEvento.setEnabled(false);
         }
-        adapter = new ListaParticpanteAdapter(EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes());
+        adapter = new ListaParticpanteAdapter(
+                ParticipanteEventoDao.getInstance().getEventoParticipantes(idEvento);
+        );
         rvParticipantesEvento.setLayoutManager(new LinearLayoutManager(this));
         rvParticipantesEvento.setAdapter(adapter);
 
@@ -58,8 +62,9 @@ public class DetalhesEventoActivity extends AppCompatActivity {
             public void onParticipanteClick(View view, int position) {
                 int i = ParticipanteDao.getInstance().getParticipantes()
                         .indexOf(EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().get(position));
+
                 Intent intent = new Intent(DetalhesEventoActivity.this, AtualizarPessoaActivity.class);
-                intent.putExtra(MainActivity.POSICAO_PARTICIPANTE, i);
+                intent.putExtra(MainActivity.ID_PARTICIPANTE, i);
                 startActivity(intent);
             }
 

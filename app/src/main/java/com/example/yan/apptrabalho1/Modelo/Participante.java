@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Participante {
 
     private String nome, email, cpf, matricula;
-    private ArrayList<Evento> meusEventos = new ArrayList<>();
+//    private ArrayList<Evento> meusEventos = new ArrayList<>();
     private int id;
 
     public Participante() {
@@ -62,7 +62,7 @@ public class Participante {
         this.matricula = matricula;
         return this;
     }
-
+/*
     public ArrayList<Evento> getMeusEventos() {
         return meusEventos;
     }
@@ -79,5 +79,5 @@ public class Participante {
     }
     public void removeEvento(int indice){
         meusEventos.remove(indice);
-    }
+    }*/
 }

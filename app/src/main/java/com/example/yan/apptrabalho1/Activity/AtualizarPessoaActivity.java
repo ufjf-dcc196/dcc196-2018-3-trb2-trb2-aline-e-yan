@@ -10,11 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.yan.apptrabalho1.Adapter.ListaEventoAdapter;
 import com.example.yan.apptrabalho1.Adapter.ListaMeusEventoAdapter;
-import com.example.yan.apptrabalho1.Modelo.Participante;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
 public class AtualizarPessoaActivity extends AppCompatActivity {
@@ -31,19 +30,22 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
     private Button btnNovoEvento;
     private Button btnCancelar;
     private ListaMeusEventoAdapter adapter;
-    private int posicaoParticipante;
+    private int idParticipante;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atualizar_pessoa);
         final Intent intent = getIntent();
         Bundle bundleResult = intent.getExtras();
-        posicaoParticipante = bundleResult.getInt(MainActivity.POSICAO_PARTICIPANTE);
+        idParticipante = bundleResult.getInt(MainActivity.ID_PARTICIPANTE);
         EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
-
+        ParticipanteEventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         rvMeusEventos = findViewById(R.id.rv_meus_eventos);
         rvMeusEventos.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ListaMeusEventoAdapter(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos());
+
+        adapter = new ListaMeusEventoAdapter(
+                ParticipanteEventoDao.getInstance().getParticipanteEventos(idParticipante));
+
         rvMeusEventos.setAdapter(adapter);
 
         nome = findViewById(R.id.act_Att_participante_nome);
@@ -54,16 +56,16 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         btnNovoEvento = findViewById(R.id.act_Att_participante_btnNovoEvento);
         btnCancelar = findViewById(R.id.act_Att_participante_btnCancelar);
 
-        nome.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getNome());
-        email.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getEmail());
-        cpf.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getCpf());
-        matricula.setText(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMatricula());
+        nome.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getNome());
+        email.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getEmail());
+        cpf.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getCpf());
+        matricula.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getMatricula());
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent attPart = new Intent();
-                ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).
+                ParticipanteDao.getInstance().getParticipantes().get(idParticipante).
                         setNome(nome.getText().toString()).
                         setMatricula(matricula.getText().toString()).
                         setEmail(email.getText().toString()).
@@ -77,7 +79,7 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent attPart = new Intent(AtualizarPessoaActivity.this, ListarEventosParaParticipanteActivity.class);
-                attPart.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, posicaoParticipante);
+                attPart.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, idParticipante);
                 startActivityForResult(attPart, REQUEST_CADASTRAR_EVENTO_PARTICIPANTE);
             }
         });
@@ -92,16 +94,19 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
             public void onMeusEventosClick(View view, int position) {
                 Intent intent = new Intent(AtualizarPessoaActivity.this, InscritosActivity.class);
                 intent.putExtra(AtualizarPessoaActivity.POSICAO_EVENTO, position);
-                intent.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, posicaoParticipante);
+                intent.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, idParticipante);
                 startActivity(intent);
             }
 
             @Override
             public void onLongMeusEventosClick(View view, int position) {
-                int indiceEvento = EventoDao.getInstance().getIndiceEvento(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos().get(position));
-                ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos().remove(position);
-                EventoDao.getInstance().getEventos().get(indiceEvento).removeParticipante(ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante));
-                adapter.notifyDataSetChanged();
+                int idEvento = EventoDao.getInstance().getEventos().get(position).getId();
+                ParticipanteEventoDao.getInstance().removeParticipanteEvento(idEvento, idParticipante);
+
+                adapter.setEventos(
+                        ParticipanteEventoDao.getInstance()
+                                .getParticipanteEventos(idParticipante));
+                adapter.notifyItemRemoved(position);
             }
         });
 

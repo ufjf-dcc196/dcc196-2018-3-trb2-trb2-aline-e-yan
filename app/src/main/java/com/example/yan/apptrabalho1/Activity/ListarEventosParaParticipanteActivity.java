@@ -55,7 +55,7 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
             public void onLongEventoParaParticipanteClick(View view, int position) {
                 Intent attPart = new Intent(ListarEventosParaParticipanteActivity.this, DetalhesEventoActivity.class);
                 int i = EventoDao.getInstance().getEventos().indexOf(eventos.get(position));
-                attPart.putExtra(ListarEventosActivity.POSICAO_EVENTO, i);
+                attPart.putExtra(ListarEventosActivity.ID_EVENTO, i);
                 attPart.putExtra(ListarEventosParaParticipanteActivity.ORIGEM_PARTICIPANTE, true);
                 startActivity(attPart);
             }

@@ -1,29 +1,21 @@
 package com.example.yan.apptrabalho1.Activity;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.yan.apptrabalho1.Adapter.ListaParticpanteAdapter;
-import com.example.yan.apptrabalho1.Banco.SemanaContract;
 import com.example.yan.apptrabalho1.Banco.SemanaDBHelper;
 import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Modelo.Participante;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static  final String DATA="DATA";
     public static  final String HORA="HORA";
 
-    public static final String POSICAO_PARTICIPANTE = "Posição Participante";
+    public static final String ID_PARTICIPANTE = "Posição Participante";
     private SemanaDBHelper dbHelper;
 
     @Override
@@ -73,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onParticipanteClick(View view, int position) {
                 Intent intent = new Intent(MainActivity.this, AtualizarPessoaActivity.class);
-                intent.putExtra(MainActivity.POSICAO_PARTICIPANTE, position);
+                int idParticipante = ParticipanteDao.getInstance().getParticipantes().get(position).getId();
+                intent.putExtra(MainActivity.ID_PARTICIPANTE, idParticipante);
+
                 startActivityForResult(intent, RESQUEST_DETALHES_PESSOA);
             }
 

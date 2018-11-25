@@ -102,7 +102,10 @@ public class ParticipanteEventoDao {
         db.insert(SemanaContract.EventoBD.TABLE_NAME,null, valores);
     }
     public void removeParticipanteEvento(int idEvento, int idParticipante){
-        //remover do banco
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete("EventoParticipante","ID_EVENTO=? and ID_PARTICIPANTE = ?"
+                ,new String[]{String.valueOf(idEvento), String.valueOf(idParticipante)});
+
     }
     private Cursor getAllParticipantesEventosBanco(int id, String argumento) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();

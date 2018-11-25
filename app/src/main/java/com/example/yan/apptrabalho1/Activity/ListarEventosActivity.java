@@ -9,14 +9,13 @@ import android.view.View;
 
 import com.example.yan.apptrabalho1.Adapter.ListaEventoAdapter;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
-import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.R;
 
 public class ListarEventosActivity extends AppCompatActivity {
 
     private RecyclerView rcListaEvento;
     private static ListaEventoAdapter listaEventosAdapter;
-    public static final String POSICAO_EVENTO = "Posição Evento";
+    public static final String ID_EVENTO = "Posição Evento";
 
     public static void attRecycle() {
         listaEventosAdapter.notifyDataSetChanged();
@@ -41,7 +40,8 @@ public class ListarEventosActivity extends AppCompatActivity {
             @Override
             public void onEventoClick(View view, int position) {
                 Intent intent = new Intent(ListarEventosActivity.this, DetalhesEventoActivity.class);
-                intent.putExtra(ListarEventosActivity.POSICAO_EVENTO, position);
+                int idEvento = EventoDao.getInstance().getEventos().get(position).getId();
+                intent.putExtra(ListarEventosActivity.ID_EVENTO, idEvento);
                 intent.putExtra(ListarEventosParaParticipanteActivity.ORIGEM_PARTICIPANTE, false);
                 startActivity(intent);
 
