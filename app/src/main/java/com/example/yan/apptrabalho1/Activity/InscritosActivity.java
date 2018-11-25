@@ -7,13 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.yan.apptrabalho1.Adapter.ListaParticpanteAdapter;
-import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
 public class InscritosActivity extends AppCompatActivity {
     private RecyclerView rvParticipantesEvento;
     private ListaParticpanteAdapter adapter;
-    private int posicaoEvento;
+    private int idEvento;
     private int posicaoParticipante;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +21,13 @@ public class InscritosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listar_participantes);
         final Intent intent = getIntent();
         Bundle bundleResult = intent.getExtras();
+        ParticipanteEventoDao.getInstance().inicializarDBHelper(getApplicationContext());
+
         rvParticipantesEvento = (RecyclerView) findViewById(R.id.rclistaparticipantes);
-        posicaoEvento = bundleResult.getInt(AtualizarPessoaActivity.POSICAO_EVENTO);
-        posicaoParticipante = bundleResult.getInt(AtualizarPessoaActivity.POSICAO_PARTICIPANTE);
-        adapter = new ListaParticpanteAdapter(ParticipanteDao.getInstance().getParticipantes()
-                .get(posicaoParticipante).getMeusEventos().get(posicaoEvento).getParticipantes());
+        idEvento = bundleResult.getInt(AtualizarPessoaActivity.ID_EVENTO);
+
+        adapter = new ListaParticpanteAdapter(ParticipanteEventoDao.
+                getInstance().getEventoParticipantes(idEvento));
 
         rvParticipantesEvento.setLayoutManager(new LinearLayoutManager(this));
         rvParticipantesEvento.setAdapter(adapter);

@@ -25,7 +25,7 @@ public class EditarEventoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_evento);
         final Intent intent = getIntent();
         Bundle bundleResult = intent.getExtras();
-        posicaoEvento = bundleResult.getInt(DetalhesEventoActivity.POSICAO_EVENTO);
+        posicaoEvento = bundleResult.getInt(DetalhesEventoActivity.ID_EVENTO);
         nomeEvento = findViewById(R.id.act_att_Evento_Nome);
         dataEvento = findViewById(R.id.act_att_evento_Data);
         horarioEvento = findViewById(R.id.act_att_evento_Horario);

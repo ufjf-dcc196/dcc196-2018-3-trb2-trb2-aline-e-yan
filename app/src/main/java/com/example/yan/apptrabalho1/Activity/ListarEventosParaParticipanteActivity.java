@@ -11,7 +11,7 @@ import android.view.View;
 import com.example.yan.apptrabalho1.Adapter.ListaEventoParaParticipanteAdapter;
 import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
-import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
     private ArrayList<Evento> eventos = new ArrayList<>();
     private RecyclerView rvEventosParaParticipante;
-    private int posicaoParticipante;
+    private int idParticipante;
     private ListaEventoParaParticipanteAdapter adapter;
     public static final String ORIGEM_PARTICIPANTE = "Origem de onde foi chamada a activity";
 
@@ -27,26 +27,29 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_eventos_para_participante);
+        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         final Intent intent = getIntent();
         Bundle bundleResult = intent.getExtras();
-        posicaoParticipante = bundleResult.getInt(AtualizarPessoaActivity.POSICAO_PARTICIPANTE);
-        instanciaEventos(posicaoParticipante);
+        idParticipante = bundleResult.getInt(AtualizarPessoaActivity.ID_PARTICIPANTE);
+
         rvEventosParaParticipante = findViewById(R.id.rv_listar_eventos_para_participante);
         rvEventosParaParticipante.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ListaEventoParaParticipanteAdapter(eventos);
+        adapter = new ListaEventoParaParticipanteAdapter(
+                ParticipanteEventoDao.getInstance().
+                        getEventosNaoInscritos(idParticipante)
+        );
         rvEventosParaParticipante.setAdapter(adapter);
-        EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         adapter.setOnEventoParaParticipanteClickListener(new ListaEventoParaParticipanteAdapter.OnEventoParaParticipanteClickListener() {
             @Override
             public void onEventoParaParticipanteClick(View view, int position) {
                 Intent attPart = new Intent();
-                int i = EventoDao.getInstance().getEventos().indexOf(eventos.get(position));
-                ParticipanteDao.getInstance().getParticipantes().
-                        get(posicaoParticipante).
-                        addEvento(eventos.get(position));
 
-                EventoDao.getInstance().getEventos().get(i).addParticipante(ParticipanteDao.getInstance().getParticipantes().
-                        get(posicaoParticipante));
+                int idEvento =
+                        //EventoDao.getInstance().getEventos().get(position).getId();
+                        ParticipanteEventoDao.getInstance().
+                        getEventosNaoInscritos(idParticipante).get(position).getId();
+                        ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, idParticipante);
+
                 setResult(Activity.RESULT_OK, attPart);
                 finish();
             }
@@ -54,8 +57,8 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
             @Override
             public void onLongEventoParaParticipanteClick(View view, int position) {
                 Intent attPart = new Intent(ListarEventosParaParticipanteActivity.this, DetalhesEventoActivity.class);
-                int i = EventoDao.getInstance().getEventos().indexOf(eventos.get(position));
-                attPart.putExtra(ListarEventosActivity.ID_EVENTO, i);
+                int idEvento = EventoDao.getInstance().getEventos().get(position).getId();
+                attPart.putExtra(ListarEventosActivity.ID_EVENTO, idEvento);
                 attPart.putExtra(ListarEventosParaParticipanteActivity.ORIGEM_PARTICIPANTE, true);
                 startActivity(attPart);
             }
@@ -63,11 +66,4 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
 
     }
 
-    private void instanciaEventos(int posicaoParticipante) {
-        for (Evento e: EventoDao.getInstance().getEventos()) {
-            if(!ParticipanteDao.getInstance().getParticipantes().get(posicaoParticipante).getMeusEventos().contains(e)){
-                eventos.add(e);
-            }
-        }
-    }
 }

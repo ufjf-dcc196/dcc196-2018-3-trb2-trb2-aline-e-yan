@@ -15,6 +15,7 @@ import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Modelo.Participante;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -143,7 +144,9 @@ public class MainActivity extends AppCompatActivity {
                     setHora(bundleResultado.getString(MainActivity.HORA)).
                     setTitulo(bundleResultado.getString(MainActivity.TITULO_EVENTO));
             EventoDao.getInstance().addEvento(e);
-
+            int idEvento = EventoDao.getInstance().getIndiceEvento(e);
+            ParticipanteEventoDao.getInstance().inicializarDBHelper(getApplicationContext());
+            ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, null);
         }
     }
 }

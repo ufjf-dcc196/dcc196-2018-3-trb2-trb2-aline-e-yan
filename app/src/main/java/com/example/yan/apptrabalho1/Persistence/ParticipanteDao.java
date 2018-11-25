@@ -48,7 +48,27 @@ public class ParticipanteDao {
             feito = true;
         }*/
     }
+    public Participante getParticipanteById(int id){
+        Participante temp = null;
+        cursor = getParticipanteByIdBanco(id);
+        int indexNomeParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_NOME);
+        int indexCpfParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_CPF);
+        int indexEmailParticipante = cursor.
+                getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_EMAIL);
+        int indexMatriculaParticipante = cursor.
+                getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA);
+        int indexIdParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD._ID);
+        if(cursor.moveToFirst()) {
+            temp = new Participante();
+            temp.setNome(cursor.getString(indexNomeParticipante))
+                    .setCpf(cursor.getString(indexCpfParticipante))
+                    .setEmail(cursor.getString(indexEmailParticipante))
+                    .setMatricula(cursor.getString(indexMatriculaParticipante))
+                    .setId(Integer.parseInt(cursor.getString(indexIdParticipante)));
 
+        }
+        return temp;
+    }
     public ArrayList<Participante> getParticipantes() {
         ArrayList<Participante> participantes = new ArrayList<>();
         cursor = getAllParticipantesBanco();
@@ -82,15 +102,30 @@ public class ParticipanteDao {
         valores.put(SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA, p.getMatricula());
         db.insert(SemanaContract.ParticipanteBD.TABLE_NAME,null, valores);
    }
-//    public void removeParticipante(int indice){
     public void removeParticipante(Participante indice){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("Participante","_ID=?",new String[]{String.valueOf(indice.getId())});
 
     }
-//    public void removeAllParticipanteEvento(Evento e)
-    public void removeAllParticipanteEvento(Evento e,Participante participantes){
-           e.removeParticipante(participantes.getId());
+     public void removeAllParticipanteEvento(Evento e,Participante participantes){
+           //e.removeParticipante(participantes.getId());
+    }
+
+    private Cursor getParticipanteByIdBanco(int id) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] visao = {
+                SemanaContract.ParticipanteBD.COLUMN_NAME_NOME,
+                SemanaContract.ParticipanteBD.COLUMN_NAME_CPF,
+                SemanaContract.ParticipanteBD.COLUMN_NAME_EMAIL,
+                SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA,
+                SemanaContract.ParticipanteBD._ID
+        };
+        String sort = SemanaContract.ParticipanteBD.COLUMN_NAME_NOME+ " DESC";
+
+        Cursor c = db.query(SemanaContract.ParticipanteBD.TABLE_NAME, visao,
+                "_ID = ?" ,new String[]{String.valueOf(id)} ,null,null, sort);
+        Log.i("SQLTEST", "getCursorSeriado: "+c.getCount());
+        return c;
     }
 
     private Cursor getAllParticipantesBanco() {
@@ -109,4 +144,14 @@ public class ParticipanteDao {
         return c;
     }
 
+    public void atualizarParticipante(Participante aux) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("nome", aux.getNome());
+        cv.put("EMAIL",aux.getEmail());
+        cv.put("CPF", aux.getCpf());
+        cv.put("MATRICULA", aux.getMatricula());
+        db.update("Participante",cv,
+                "_ID=?",new String[]{String.valueOf(aux.getId())});
+    }
 }

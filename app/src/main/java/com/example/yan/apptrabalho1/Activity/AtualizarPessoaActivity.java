@@ -11,15 +11,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.yan.apptrabalho1.Adapter.ListaMeusEventoAdapter;
+import com.example.yan.apptrabalho1.Modelo.Evento;
+import com.example.yan.apptrabalho1.Modelo.Participante;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteDao;
 import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
+import java.util.ArrayList;
+
 public class AtualizarPessoaActivity extends AppCompatActivity {
     private static final int REQUEST_CADASTRAR_EVENTO_PARTICIPANTE = 1;
-    public static final String POSICAO_PARTICIPANTE = "Posição Participante";
-    public static final String POSICAO_EVENTO = "Posição Evento";
+    public static final String ID_PARTICIPANTE = "Posição Participante";
+    public static final String ID_EVENTO = "Posição Evento";
 
     private RecyclerView rvMeusEventos;
     private EditText nome;
@@ -38,13 +42,15 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         final Intent intent = getIntent();
         Bundle bundleResult = intent.getExtras();
         idParticipante = bundleResult.getInt(MainActivity.ID_PARTICIPANTE);
+        ParticipanteDao.getInstance().inicializarDBHelper(getApplicationContext());
         EventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         ParticipanteEventoDao.getInstance().inicializarDBHelper(getApplicationContext());
         rvMeusEventos = findViewById(R.id.rv_meus_eventos);
         rvMeusEventos.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = new ListaMeusEventoAdapter(
-                ParticipanteEventoDao.getInstance().getParticipanteEventos(idParticipante));
+               ParticipanteEventoDao.getInstance().getParticipanteEventos(idParticipante)
+        );
 
         rvMeusEventos.setAdapter(adapter);
 
@@ -56,20 +62,22 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         btnNovoEvento = findViewById(R.id.act_Att_participante_btnNovoEvento);
         btnCancelar = findViewById(R.id.act_Att_participante_btnCancelar);
 
-        nome.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getNome());
-        email.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getEmail());
-        cpf.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getCpf());
-        matricula.setText(ParticipanteDao.getInstance().getParticipantes().get(idParticipante).getMatricula());
+        nome.setText(ParticipanteDao.getInstance().getParticipanteById(idParticipante).getNome());
+        email.setText(ParticipanteDao.getInstance().getParticipanteById(idParticipante).getEmail());
+        cpf.setText(ParticipanteDao.getInstance().getParticipanteById(idParticipante).getCpf());
+        matricula.setText(ParticipanteDao.getInstance().getParticipanteById(idParticipante).getMatricula());
 
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent attPart = new Intent();
-                ParticipanteDao.getInstance().getParticipantes().get(idParticipante).
-                        setNome(nome.getText().toString()).
+                Participante aux = new Participante();
+                aux.setNome(nome.getText().toString()).
                         setMatricula(matricula.getText().toString()).
                         setEmail(email.getText().toString()).
-                        setCpf(cpf.getText().toString());
+                        setCpf(cpf.getText().toString())
+                        .setId(idParticipante);
+                ParticipanteDao.getInstance().atualizarParticipante(aux);
                 setResult(Activity.RESULT_OK, attPart);
                 finish();
             }
@@ -79,7 +87,7 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent attPart = new Intent(AtualizarPessoaActivity.this, ListarEventosParaParticipanteActivity.class);
-                attPart.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, idParticipante);
+                attPart.putExtra(AtualizarPessoaActivity.ID_PARTICIPANTE, idParticipante);
                 startActivityForResult(attPart, REQUEST_CADASTRAR_EVENTO_PARTICIPANTE);
             }
         });
@@ -93,8 +101,9 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
             @Override
             public void onMeusEventosClick(View view, int position) {
                 Intent intent = new Intent(AtualizarPessoaActivity.this, InscritosActivity.class);
-                intent.putExtra(AtualizarPessoaActivity.POSICAO_EVENTO, position);
-                intent.putExtra(AtualizarPessoaActivity.POSICAO_PARTICIPANTE, idParticipante);
+                int idEvento = EventoDao.getInstance().getEventos().get(position).getId();
+                intent.putExtra(AtualizarPessoaActivity.ID_EVENTO, idEvento);
+
                 startActivity(intent);
             }
 
@@ -115,7 +124,10 @@ public class AtualizarPessoaActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == AtualizarPessoaActivity.REQUEST_CADASTRAR_EVENTO_PARTICIPANTE && resultCode== Activity.RESULT_OK && data != null){
-             adapter.notifyDataSetChanged();
+            adapter.setEventos(
+                    ParticipanteEventoDao.getInstance().
+                            getParticipanteEventos(idParticipante));
+            adapter.notifyDataSetChanged();
         }
     }
 }

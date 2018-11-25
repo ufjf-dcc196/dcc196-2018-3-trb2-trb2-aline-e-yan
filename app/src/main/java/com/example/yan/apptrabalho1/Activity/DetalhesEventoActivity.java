@@ -17,8 +17,7 @@ import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
 public class DetalhesEventoActivity extends AppCompatActivity {
-    public static final String POSICAO_PARTICIPANTE = "Posição Participante";
-    public static final String POSICAO_EVENTO = "Posiçao do Evento";
+    public static final String ID_EVENTO = "Posiçao do Evento";
     private static final int REQUEST_ATUALIZAR_EVENTO=1;
 
     private RecyclerView rvParticipantesEvento;
@@ -26,7 +25,6 @@ public class DetalhesEventoActivity extends AppCompatActivity {
     private Button btnEditarInfoEvento;
     private TextView txtTitulo,txtData,txtHorario,txtFacilitador,txtDescricao;
     private int idEvento;
-    private int posicaoParticipante;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +49,7 @@ public class DetalhesEventoActivity extends AppCompatActivity {
             btnEditarInfoEvento.setEnabled(false);
         }
         adapter = new ListaParticpanteAdapter(
-                ParticipanteEventoDao.getInstance().getEventoParticipantes(idEvento);
+                ParticipanteEventoDao.getInstance().getEventoParticipantes(idEvento)
         );
         rvParticipantesEvento.setLayoutManager(new LinearLayoutManager(this));
         rvParticipantesEvento.setAdapter(adapter);
@@ -60,46 +58,55 @@ public class DetalhesEventoActivity extends AppCompatActivity {
         adapter.setOnParticipanteClickListener(new ListaParticpanteAdapter.OnParticipanteClickListener() {
             @Override
             public void onParticipanteClick(View view, int position) {
-                int i = ParticipanteDao.getInstance().getParticipantes()
-                        .indexOf(EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().get(position));
-
+                int idParticipante = getIdParticipante(position);
                 Intent intent = new Intent(DetalhesEventoActivity.this, AtualizarPessoaActivity.class);
-                intent.putExtra(MainActivity.ID_PARTICIPANTE, i);
+                intent.putExtra(MainActivity.ID_PARTICIPANTE, idParticipante);
                 startActivity(intent);
             }
 
             @Override
             public void onLongParticipanteClick(View view, int position) {
-                //ParticipanteDao.getInstance().removeParticipanteDoEvento(
-                 //       EventoDao.getInstance().getEventos().get(posicaoEvento),
-  //                      EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().get(position));
-//
-                EventoDao.getInstance().getEventos().get(posicaoEvento).getParticipantes().remove(position);
-                adapter.notifyDataSetChanged();
+                int idParticipante = getIdParticipante(position);
+                ParticipanteEventoDao.getInstance().removeParticipanteEvento(idEvento,idParticipante);
+                adapter.setParticipantes(
+                        ParticipanteEventoDao.getInstance().getEventoParticipantes(idEvento)
+                );
+                adapter.notifyItemRemoved(position);
             }
         });
         btnEditarInfoEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetalhesEventoActivity.this,EditarEventoActivity.class);
-                intent.putExtra(DetalhesEventoActivity.POSICAO_EVENTO, posicaoEvento);
+                intent.putExtra(DetalhesEventoActivity.ID_EVENTO, idEvento);
                 startActivityForResult(intent, REQUEST_ATUALIZAR_EVENTO);
             }
         });
     }
 
     private void setInformacoes() {
-        txtTitulo.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getTitulo());
-        txtHorario.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getHora());
-        txtFacilitador.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getFacilitador());
-        txtDescricao.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getDescricao());
-        txtData.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getDia());
+        if(EventoDao.getInstance().getEventoById(idEvento) != null){
+            txtTitulo.setText(
+                EventoDao.getInstance().getEventoById(idEvento).getTitulo());
+            txtHorario.setText(
+                    EventoDao.getInstance().getEventoById(idEvento).getHora());
+            txtFacilitador.setText(
+                    EventoDao.getInstance().getEventoById(idEvento).getFacilitador());
+            txtDescricao.setText(
+                    EventoDao.getInstance().getEventoById(idEvento).getDescricao());
+            txtData.setText(
+                    EventoDao.getInstance().getEventoById(idEvento).getDia());
+        }
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode == DetalhesEventoActivity.REQUEST_ATUALIZAR_EVENTO && resultCode== Activity.RESULT_OK && data != null){
             setInformacoes();
         }
+    }
+    private int getIdParticipante(int position){
+        int idParticipante = ParticipanteDao.getInstance()
+                .getParticipantes().get(position).getId();
+        return idParticipante;
     }
 }

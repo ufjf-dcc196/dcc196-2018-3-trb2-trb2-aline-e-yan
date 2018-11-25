@@ -40,6 +40,8 @@ public class EventoDao {
         dbHelper = new SemanaDBHelper(c);
         if(!feito){
             insercaoBanco();
+            ParticipanteEventoDao.getInstance().inicializarDBHelper(c);
+            ParticipanteEventoDao.getInstance().addPartipanteEvento(1,1);
             feito = true;
         }
     }
