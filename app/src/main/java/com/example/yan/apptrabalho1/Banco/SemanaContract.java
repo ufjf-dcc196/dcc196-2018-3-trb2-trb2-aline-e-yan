@@ -1,6 +1,7 @@
 package com.example.yan.apptrabalho1.Banco;
 
 import android.provider.BaseColumns;
+import android.widget.ExpandableListView;
 
 public final class SemanaContract {
     public final class EventoBD implements BaseColumns {
@@ -20,6 +21,9 @@ public final class SemanaContract {
                 + EventoBD.COLUMN_NAME_DESCRICAO+ " TEXT "
                 +")";
         public final static String DROP_EVENTO= "DROP TABLE IF EXISTS "+EventoBD.TABLE_NAME;
+        public final static String DELETE_EVENTO= "DELETE FROM" + EventoBD.TABLE_NAME+ "WHERE id=" + EventoBD._ID;
+
+
 
     }
 
@@ -50,7 +54,10 @@ public final class SemanaContract {
                 + EventoParticipanteBD.COLUMN_NAME_ID_EVENTO+ " INTEGER,"
                 + EventoParticipanteBD.COLUMN_NAME_ID_PARTICIPANTE+ " INTEGER "
                 +")";
+
         public final static String DROP_EVENTO_PARTICIPANTE = "DROP TABLE IF EXISTS "+EventoParticipanteBD.TABLE_NAME;
+
+
 
     }
 }

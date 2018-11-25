@@ -77,9 +77,11 @@ public class EventoDao {
         db.insert(SemanaContract.EventoBD.TABLE_NAME,null, valores);
 
     }
-    public void removeEvento(Evento e){
-        //remover do banco
-    }
+    public void removeEvento(Evento e) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rows=db.delete("TABLE_NAME","_ID=?",new String[]{String.valueOf(e.getId())});
+        }
+
     public int getIndiceEvento(Evento e){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] visao = {
@@ -114,5 +116,6 @@ public class EventoDao {
         Log.i("SQLTEST", "getCursorSeriado: "+c.getCount());
         return c;
     }
+
 
 }

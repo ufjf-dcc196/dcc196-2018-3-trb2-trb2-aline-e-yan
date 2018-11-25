@@ -22,8 +22,11 @@ public class SemanaDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SemanaContract.EventoBD.DROP_EVENTO);
+        db.execSQL(SemanaContract.EventoBD.DELETE_EVENTO);
         db.execSQL(SemanaContract.ParticipanteBD.DROP_PARTICPANTE);
         db.execSQL(SemanaContract.EventoParticipanteBD.DROP_EVENTO_PARTICIPANTE);
         onCreate(db);
     }
+
+
 }

@@ -12,6 +12,7 @@ import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Modelo.Participante;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParticipanteDao {
     private static ParticipanteDao instance = new ParticipanteDao();
@@ -81,12 +82,15 @@ public class ParticipanteDao {
         valores.put(SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA, p.getMatricula());
         db.insert(SemanaContract.ParticipanteBD.TABLE_NAME,null, valores);
    }
+//    public void removeParticipante(int indice){
+    public void removeParticipante(Participante indice){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rows=db.delete("TABLE_NAME","_ID=?",new String[]{String.valueOf(indice.getId())});
 
-    public void removeParticipante(int indice){
-        //remover participante
     }
-    public void removeAllParticipanteEvento(Evento e){
-        //remover
+//    public void removeAllParticipanteEvento(Evento e)
+    public void removeAllParticipanteEvento(Evento e,Participante participantes){
+           e.removeParticipante(participantes.getId());
     }
 
     private Cursor getAllParticipantesBanco() {
