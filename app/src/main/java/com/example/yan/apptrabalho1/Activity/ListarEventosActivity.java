@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.yan.apptrabalho1.Adapter.ListaEventoAdapter;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
+import com.example.yan.apptrabalho1.Persistence.ParticipanteEventoDao;
 import com.example.yan.apptrabalho1.R;
 
 public class ListarEventosActivity extends AppCompatActivity {
@@ -49,10 +50,12 @@ public class ListarEventosActivity extends AppCompatActivity {
 
             @Override
             public void onLongEventoClick(View view, int position) {
-
-       //         ParticipanteDao.getInstance().removeAllParticipanteEvento(EventoDao.getInstance().getEventos().get(position));
-                EventoDao.getInstance().getEventos().remove(position);
-                listaEventosAdapter.notifyDataSetChanged();
+                int idEvento = EventoDao.getInstance().getEventos().get(position).getId();
+                EventoDao.getInstance().removeEvento(EventoDao.getInstance().getEventos().get(position));
+                ParticipanteEventoDao.getInstance().inicializarDBHelper(getApplicationContext());
+                ParticipanteEventoDao.getInstance().removerAllParticipantesEvento(idEvento);
+                listaEventosAdapter.setEventos(EventoDao.getInstance().getEventos());
+                listaEventosAdapter.notifyItemRemoved(position);
             }
         });
 

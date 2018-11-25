@@ -43,6 +43,25 @@ public class EventoDao {
             feito = true;
         }
     }
+    public Evento getEventoById(int idEvento){
+        int indexTituloEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_TITULO);
+        int indexDataEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_DIA);
+        int indexHoraEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_HORA);
+        int indexFacilitadorEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_FACILITADOR);
+        int indexDescricaoEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_DESCRICAO);
+        int indexIdEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD._ID);
+        Evento eventoSolicitado = null;
+        if(cursor.moveToFirst()) {
+            eventoSolicitado = new Evento();
+            eventoSolicitado.setTitulo(cursor.getString(indexTituloEvento))
+                    .setDia(cursor.getString(indexDataEvento))
+                    .setHora(cursor.getString(indexHoraEvento))
+                    .setFacilitador(cursor.getString(indexFacilitadorEvento))
+                    .setDescricao(cursor.getString(indexDescricaoEvento))
+                    .setId(Integer.parseInt(cursor.getString(indexIdEvento)));
+        }
+        return eventoSolicitado;
+    }
     public ArrayList<Evento> getEventos() {
         cursor = getAllEventosBanco();
         ArrayList<Evento> eventos = new ArrayList<>();
@@ -79,7 +98,8 @@ public class EventoDao {
     }
     public void removeEvento(Evento e) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rows=db.delete("TABLE_NAME","_ID=?",new String[]{String.valueOf(e.getId())});
+        int rows=db.delete(SemanaContract.EventoBD.TABLE_NAME,
+                "_ID=?",new String[]{String.valueOf(e.getId())});
         }
 
     public int getIndiceEvento(Evento e){
@@ -91,7 +111,7 @@ public class EventoDao {
         String sort = SemanaContract.EventoBD.COLUMN_NAME_DIA+ " DESC";
 
         Cursor c = db.query(SemanaContract.EventoBD.TABLE_NAME, visao,
-                "Where TITULO= "+e.getTitulo(),null,
+                "TITULO = ?",new String[]{e.getTitulo()} ,
                 null,null, sort);
         Log.i("SQLTEST", "getCursorSeriado: "+c.getCount());
         if(c.moveToFirst()){
