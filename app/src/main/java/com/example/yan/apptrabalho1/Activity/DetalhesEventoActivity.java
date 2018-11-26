@@ -101,7 +101,7 @@ public class DetalhesEventoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == DetalhesEventoActivity.REQUEST_ATUALIZAR_EVENTO && resultCode== Activity.RESULT_OK && data != null){
-            
+
             setInformacoes();
         }
     }

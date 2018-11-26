@@ -39,11 +39,12 @@ public class EditarEventoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Evento e = new Evento();
-                e.setDescricao(descricaoEvento.getText().toString()).
+                e.
+                        setDescricao(descricaoEvento.getText().toString()).
                         setDia(dataEvento.getText().toString()).
                         setFacilitador(facilitadorEvento.getText().toString()).
                         setHora(horarioEvento.getText().toString()).
-                        setTitulo(nomeEvento.getText().toString());
+                        setTitulo(nomeEvento.getText().toString()).setId(idEvento);
                 EventoDao.getInstance().atualizarEvento(e);
                 ListarEventosActivity.attRecycle();
                 setResult(Activity.RESULT_OK, intent);

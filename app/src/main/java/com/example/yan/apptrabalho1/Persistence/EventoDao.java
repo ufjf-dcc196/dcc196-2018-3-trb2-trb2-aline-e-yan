@@ -67,11 +67,11 @@ public class EventoDao {
     public void atualizarEvento(Evento aux) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("Titulo", aux.getTitulo());
-        cv.put("DIA", aux.getDia());
-        cv.put("HORA",aux.getHora());
-        cv.put("FACILITADOR", aux.getFacilitador());
-        cv.put("DESCRICAO", aux.getDescricao());
+        cv.put("Titulo ", aux.getTitulo());
+        cv.put("DIA ", aux.getDia());
+        cv.put("HORA ",aux.getHora());
+        cv.put("FACILITADOR ", aux.getFacilitador());
+        cv.put("DESCRICAO ", aux.getDescricao());
         db.update("Evento",cv,
                 "_ID=?",new String[]{String.valueOf(aux.getId())});
     }
