@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.yan.apptrabalho1.Modelo.Evento;
 import com.example.yan.apptrabalho1.Persistence.EventoDao;
 import com.example.yan.apptrabalho1.R;
 
@@ -18,14 +19,14 @@ public class EditarEventoActivity extends AppCompatActivity {
     private EditText facilitadorEvento;
     private EditText descricaoEvento;
     private Button btnOk;
-    private int posicaoEvento;
+    private int idEvento;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_evento);
         final Intent intent = getIntent();
         Bundle bundleResult = intent.getExtras();
-        posicaoEvento = bundleResult.getInt(DetalhesEventoActivity.ID_EVENTO);
+        idEvento = bundleResult.getInt(DetalhesEventoActivity.ID_EVENTO);
         nomeEvento = findViewById(R.id.act_att_Evento_Nome);
         dataEvento = findViewById(R.id.act_att_evento_Data);
         horarioEvento = findViewById(R.id.act_att_evento_Horario);
@@ -37,12 +38,13 @@ public class EditarEventoActivity extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventoDao.getInstance().getEventos().get(posicaoEvento).
-                        setDescricao(descricaoEvento.getText().toString()).
+                Evento e = new Evento();
+                e.setDescricao(descricaoEvento.getText().toString()).
                         setDia(dataEvento.getText().toString()).
                         setFacilitador(facilitadorEvento.getText().toString()).
                         setHora(horarioEvento.getText().toString()).
                         setTitulo(nomeEvento.getText().toString());
+                EventoDao.getInstance().atualizarEvento(e);
                 ListarEventosActivity.attRecycle();
                 setResult(Activity.RESULT_OK, intent);
                 finish();
@@ -50,10 +52,10 @@ public class EditarEventoActivity extends AppCompatActivity {
         });
     }
     private void setInformacoes() {
-        nomeEvento.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getTitulo());
-        horarioEvento.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getHora());
-        facilitadorEvento.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getFacilitador());
-        descricaoEvento.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getDescricao());
-        dataEvento.setText(EventoDao.getInstance().getEventos().get(posicaoEvento).getDia());
+        nomeEvento.setText(EventoDao.getInstance().getEventoById(idEvento).getTitulo());
+        horarioEvento.setText(EventoDao.getInstance().getEventoById(idEvento).getHora());
+        facilitadorEvento.setText(EventoDao.getInstance().getEventoById(idEvento).getFacilitador());
+        descricaoEvento.setText(EventoDao.getInstance().getEventoById(idEvento).getDescricao());
+        dataEvento.setText(EventoDao.getInstance().getEventoById(idEvento).getDia());
     }
 }

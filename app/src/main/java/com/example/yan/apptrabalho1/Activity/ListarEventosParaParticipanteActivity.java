@@ -38,17 +38,18 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
                 ParticipanteEventoDao.getInstance().
                         getEventosNaoInscritos(idParticipante)
         );
+        adapter.setEventos(ParticipanteEventoDao.getInstance().
+                getEventosNaoInscritos(idParticipante));
         rvEventosParaParticipante.setAdapter(adapter);
         adapter.setOnEventoParaParticipanteClickListener(new ListaEventoParaParticipanteAdapter.OnEventoParaParticipanteClickListener() {
             @Override
             public void onEventoParaParticipanteClick(View view, int position) {
                 Intent attPart = new Intent();
 
-                int idEvento =
-                        //EventoDao.getInstance().getEventos().get(position).getId();
-                        ParticipanteEventoDao.getInstance().
+                int idEvento =ParticipanteEventoDao.getInstance().
                         getEventosNaoInscritos(idParticipante).get(position).getId();
-                        ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, idParticipante);
+
+                ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, idParticipante);
 
                 setResult(Activity.RESULT_OK, attPart);
                 finish();

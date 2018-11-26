@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
                     setHora(bundleResultado.getString(MainActivity.HORA)).
                     setTitulo(bundleResultado.getString(MainActivity.TITULO_EVENTO));
             EventoDao.getInstance().addEvento(e);
-            int idEvento = EventoDao.getInstance().getIndiceEvento(e);
+            /*int idEvento = EventoDao.getInstance().getIndiceEvento(e);
             ParticipanteEventoDao.getInstance().inicializarDBHelper(getApplicationContext());
-            ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, null);
-        }
+            ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, );
+        */}
     }
 }

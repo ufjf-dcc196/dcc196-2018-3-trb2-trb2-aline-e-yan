@@ -38,12 +38,12 @@ public class EventoDao {
 
     public void inicializarDBHelper(Context c){
         dbHelper = new SemanaDBHelper(c);
-        if(!feito){
+        /*if(!feito){
             insercaoBanco();
             ParticipanteEventoDao.getInstance().inicializarDBHelper(c);
             ParticipanteEventoDao.getInstance().addPartipanteEvento(1,1);
             feito = true;
-        }
+        }*/
     }
     public Evento getEventoById(int idEvento){
         int indexTituloEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_TITULO);
@@ -63,6 +63,17 @@ public class EventoDao {
                     .setId(Integer.parseInt(cursor.getString(indexIdEvento)));
         }
         return eventoSolicitado;
+    }
+    public void atualizarEvento(Evento aux) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("Titulo", aux.getTitulo());
+        cv.put("DIA", aux.getDia());
+        cv.put("HORA",aux.getHora());
+        cv.put("FACILITADOR", aux.getFacilitador());
+        cv.put("DESCRICAO", aux.getDescricao());
+        db.update("Evento",cv,
+                "_ID=?",new String[]{String.valueOf(aux.getId())});
     }
     public ArrayList<Evento> getEventos() {
         cursor = getAllEventosBanco();

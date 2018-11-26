@@ -19,6 +19,7 @@ public class ListarEventosActivity extends AppCompatActivity {
     public static final String ID_EVENTO = "Posição Evento";
 
     public static void attRecycle() {
+        listaEventosAdapter.setEventos(EventoDao.getInstance().getEventos());
         listaEventosAdapter.notifyDataSetChanged();
     }
 

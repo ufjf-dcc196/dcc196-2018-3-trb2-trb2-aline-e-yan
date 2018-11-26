@@ -45,7 +45,7 @@ public class ParticipanteEventoDao {
         }*/
     }
     public ArrayList<Participante> getEventoParticipantes(int id) {
-        cursor = getAllParticipantesEventosBanco(id,"Participante");
+        cursor = getAllParticipantesEventosBanco(id,"Participantes");
         ArrayList<Participante> participantes = new ArrayList<>();
 
         int indexNomeParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_NOME);
@@ -76,7 +76,7 @@ public class ParticipanteEventoDao {
     }
 
     public ArrayList<Evento> getParticipanteEventos(int id) {
-        cursor = getAllParticipantesEventosBanco(id,"Evento");
+        cursor = getAllParticipantesEventosBanco(id,"Eventos");
         ArrayList<Evento> eventos = new ArrayList<>();
         int indexTituloEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_TITULO);
         int indexDataEvento = cursor.getColumnIndexOrThrow(SemanaContract.EventoBD.COLUMN_NAME_DIA);
@@ -93,7 +93,7 @@ public class ParticipanteEventoDao {
                     .setHora(cursor.getString(indexHoraEvento))
                     .setFacilitador(cursor.getString(indexFacilitadorEvento))
                     .setDescricao(cursor.getString(indexDescricaoEvento))
-                    .setId(Integer.parseInt(cursor.getString(indexIdEvento)));
+                    .setId(cursor.getInt(indexIdEvento));
                 eventos.add(temp);
             }while (cursor.moveToNext());
         }
@@ -101,7 +101,7 @@ public class ParticipanteEventoDao {
     }
 
 
-    public void addPartipanteEvento(int idEvento, Integer idParticipante){
+    public void addPartipanteEvento(int idEvento, int idParticipante){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put(SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_EVENTO, idEvento);
@@ -117,20 +117,16 @@ public class ParticipanteEventoDao {
     private Cursor getAllParticipantesEventosBanco(int id, String argumento) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor c;
-        if("Participante".equals(argumento)){
+        if("Eventos".equals(argumento)){
             String MY_QUERY =
-                    "SELECT * FROM "+
-                            SemanaContract.EventoParticipanteBD.TABLE_NAME+" as  EvPart INNER JOIN" +
-                            " " +SemanaContract.ParticipanteBD.TABLE_NAME+
-                            " as Part ON EvPart.ID_EVENTO = Part._ID WHERE EvPart.ID_EVENTO=?";
+                    "select * from Evento, EventoParticipante where ID_PARTICIPANTE = ? " +
+                            "AND ID_EVENTO = Evento._ID";
 
             c= db.rawQuery(MY_QUERY, new String[]{String.valueOf(id)});
         }else{
             String MY_QUERY =
-                    "SELECT * FROM "+
-                            SemanaContract.EventoParticipanteBD.TABLE_NAME+" as  EvPart INNER JOIN" +
-                            " " +SemanaContract.EventoBD.TABLE_NAME+
-                            " as Ev ON EvPart.ID_EVENTO = Ev._ID WHERE EvPart.ID_PARTICIPANTE=?";
+                    "select * from Participante, EventoParticipante where ID_EVENTO = ? " +
+                            "AND ID_PARTICIPANTE = Participante._ID";
 
             c= db.rawQuery(MY_QUERY, new String[]{String.valueOf(id)});
         }
@@ -165,11 +161,21 @@ public class ParticipanteEventoDao {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor;
         String MY_QUERY =
-                "SELECT * FROM "+SemanaContract.EventoParticipanteBD.TABLE_NAME
-                        +" as  EvPart inner join "+SemanaContract.EventoBD.TABLE_NAME+
-                        " as Ev WHERE EvPart.ID_PARTICIPANTE !=?";
-
+                "select * from Evento, EventoParticipante where ID_PARTICIPANTE != ? AND Evento._id = ID_EVENTO";
         cursor= db.rawQuery(MY_QUERY, new String[]{String.valueOf(idParticipante)});
+        if(cursor.getCount() == 0){
+            String[] visao = {
+                    SemanaContract.EventoBD.COLUMN_NAME_TITULO,
+                    SemanaContract.EventoBD.COLUMN_NAME_DESCRICAO,
+                    SemanaContract.EventoBD.COLUMN_NAME_DIA,
+                    SemanaContract.EventoBD.COLUMN_NAME_FACILITADOR,
+                    SemanaContract.EventoBD.COLUMN_NAME_HORA,
+                    SemanaContract.EventoBD._ID
+            };
+            String sort = SemanaContract.EventoBD.COLUMN_NAME_DIA+ " DESC";
+            cursor = db.query(SemanaContract.EventoBD.TABLE_NAME, visao,
+                    null,null,null,null, sort);
+        }
         Log.i("SQLTEST", "getCursorSeriado: "+cursor.getCount());
 
         return cursor;
