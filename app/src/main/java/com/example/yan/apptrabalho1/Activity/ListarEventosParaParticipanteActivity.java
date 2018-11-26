@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.yan.apptrabalho1.Adapter.ListaEventoParaParticipanteAdapter;
 import com.example.yan.apptrabalho1.Modelo.Evento;
@@ -48,9 +50,15 @@ public class ListarEventosParaParticipanteActivity extends AppCompatActivity {
 
                 int idEvento =ParticipanteEventoDao.getInstance().
                         getEventosNaoInscritos(idParticipante).get(position).getId();
+                if(!ParticipanteEventoDao.getInstance().verificaInscrição(idEvento, idParticipante)) {
+                    ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, idParticipante);
+                }else{
+                    Toast t = Toast.makeText(getApplicationContext(), "Já cadastrado neste Evento", Toast.LENGTH_LONG);
+                    t.setGravity(Gravity.CENTER, 0,0);
+                    t.show();
 
-                ParticipanteEventoDao.getInstance().addPartipanteEvento(idEvento, idParticipante);
 
+                }
                 setResult(Activity.RESULT_OK, attPart);
                 finish();
             }

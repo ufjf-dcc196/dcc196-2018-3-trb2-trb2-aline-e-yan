@@ -158,7 +158,18 @@ public class ParticipanteEventoDao {
         }
         return eventos;
     }
-
+    public boolean verificaInscrição(int idEvento, int idParticipante){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String[] visao = {
+                SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_EVENTO,
+                SemanaContract.EventoParticipanteBD.COLUMN_NAME_ID_PARTICIPANTE
+        };
+        String sort = SemanaContract.EventoParticipanteBD._ID+ " DESC";
+        cursor = db.query(SemanaContract.EventoParticipanteBD.TABLE_NAME, visao,
+                "ID_EVENTO = ? and ID_PARTICIPANTE = ?" ,
+                new String[]{String.valueOf(idEvento),String.valueOf(idParticipante)} ,null,null, sort);
+        return cursor.moveToFirst();
+    }
     private Cursor getEventosNaoInscritosBanco(int idParticipante) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor;
