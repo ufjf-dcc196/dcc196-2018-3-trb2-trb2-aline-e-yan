@@ -56,15 +56,17 @@ public class ParticipanteEventoDao {
                 getColumnIndexOrThrow(SemanaContract.ParticipanteBD.COLUMN_NAME_MATRICULA);
         int indexIdParticipante = cursor.getColumnIndexOrThrow(SemanaContract.ParticipanteBD._ID);
 
-        cursor.moveToFirst();
-        while (cursor.moveToNext()){
-            Participante temp = new Participante();
-            temp.setNome(cursor.getString(indexNomeParticipante))
-                    .setCpf(cursor.getString(indexCpfParticipante))
-                    .setEmail(cursor.getString(indexEmailParticipante))
-                    .setMatricula(cursor.getString(indexMatriculaParticipante))
-                    .setId(Integer.parseInt(cursor.getString(indexIdParticipante)));
-            participantes.add(temp);
+
+        if(cursor.moveToFirst()){
+        do{
+                Participante temp = new Participante();
+                temp.setNome(cursor.getString(indexNomeParticipante))
+                        .setCpf(cursor.getString(indexCpfParticipante))
+                        .setEmail(cursor.getString(indexEmailParticipante))
+                        .setMatricula(cursor.getString(indexMatriculaParticipante))
+                        .setId(Integer.parseInt(cursor.getString(indexIdParticipante)));
+                participantes.add(temp);
+            }while (cursor.moveToNext());
         }
         return participantes;
     }
